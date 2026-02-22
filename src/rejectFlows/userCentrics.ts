@@ -37,6 +37,7 @@ export const rejectUserCentricsSecondaryFlow = () => {
 const cleanupUserCentricsOverlay = () => {
   document.body.style.overflow = '';
   document.body.classList.remove('uc-overflow-hidden');
+  document.body.classList.remove('overflowHidden');
 };
 
 export const rejectUserCentricsTertiaryFlow = () => {
