@@ -9,9 +9,11 @@ export const rejectUserCentricsPrimaryFlow = () => {
   );
   if (rejectBtn) {
     rejectBtn.click();
+    cleanupUserCentricsOverlay();
     return true;
   }
   shadowDOMHost.remove();
+  cleanupUserCentricsOverlay();
   return true;
 };
 
@@ -24,10 +26,17 @@ export const rejectUserCentricsSecondaryFlow = () => {
   const rejectBtn = shadowDOMHost.shadowRoot?.getElementById('deny');
   if (rejectBtn) {
     rejectBtn.click();
+    cleanupUserCentricsOverlay();
     return true;
   }
   shadowDOMHost.remove();
+  cleanupUserCentricsOverlay();
   return true;
+};
+
+const cleanupUserCentricsOverlay = () => {
+  document.body.style.overflow = '';
+  document.body.classList.remove('uc-overflow-hidden');
 };
 
 export const rejectUserCentricsTertiaryFlow = () => {

@@ -8,15 +8,26 @@ export const closeOrRejectOneTrust = () => {
   const rejectButton = document.getElementById('onetrust-reject-all-handler');
   if (rejectButton) {
     rejectButton.click();
+    cleanupOneTrustOverlay();
     return true;
   }
 
   const consentSDK = document.getElementById('onetrust-consent-sdk');
   if (consentSDK) {
     consentSDK.remove();
+    cleanupOneTrustOverlay();
     return true;
   }
   return false;
+};
+
+const cleanupOneTrustOverlay = () => {
+  const overlay = document.querySelector<HTMLDivElement>('.onetrust-pc-dark-filter');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.classList.remove('ot-overflow-hidden');
+  document.body.style.overflow = '';
 };
 
 // transcend is running their popup in a shadow DOM,
@@ -114,17 +125,28 @@ export const closeOrRejectTrustArc = () => {
 };
 
 export const closeOrRejectCookieYes = () => {
-  const rejectButton = document.querySelector<HTMLButtonElement>('[data-cky-tag="reject-button"]');
+  const rejectButton =
+    document.querySelector<HTMLButtonElement>('[data-cky-tag="reject-button"]') ||
+    document.querySelector<HTMLButtonElement>('.cky-btn-reject');
   if (rejectButton) {
     rejectButton.click();
+    cleanupCookieYesOverlay();
     return true;
   }
   const banner = document.querySelector<HTMLDivElement>('.cky-consent-container');
   if (banner) {
     banner.remove();
+    cleanupCookieYesOverlay();
     return true;
   }
   return false;
+};
+
+const cleanupCookieYesOverlay = () => {
+  const overlay = document.querySelector<HTMLDivElement>('.cky-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
 };
 
 export const closeOrRejectDrCookie = () => {
