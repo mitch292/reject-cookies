@@ -8,15 +8,26 @@ export const closeOrRejectOneTrust = () => {
   const rejectButton = document.getElementById('onetrust-reject-all-handler');
   if (rejectButton) {
     rejectButton.click();
+    cleanupOneTrustOverlay();
     return true;
   }
 
   const consentSDK = document.getElementById('onetrust-consent-sdk');
   if (consentSDK) {
     consentSDK.remove();
+    cleanupOneTrustOverlay();
     return true;
   }
   return false;
+};
+
+const cleanupOneTrustOverlay = () => {
+  const overlay = document.querySelector<HTMLDivElement>('.onetrust-pc-dark-filter');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.classList.remove('ot-overflow-hidden');
+  document.body.style.overflow = '';
 };
 
 // transcend is running their popup in a shadow DOM,
@@ -114,17 +125,28 @@ export const closeOrRejectTrustArc = () => {
 };
 
 export const closeOrRejectCookieYes = () => {
-  const rejectButton = document.querySelector<HTMLButtonElement>('[data-cky-tag="reject-button"]');
+  const rejectButton =
+    document.querySelector<HTMLButtonElement>('[data-cky-tag="reject-button"]') ||
+    document.querySelector<HTMLButtonElement>('.cky-btn-reject');
   if (rejectButton) {
     rejectButton.click();
+    cleanupCookieYesOverlay();
     return true;
   }
   const banner = document.querySelector<HTMLDivElement>('.cky-consent-container');
   if (banner) {
     banner.remove();
+    cleanupCookieYesOverlay();
     return true;
   }
   return false;
+};
+
+const cleanupCookieYesOverlay = () => {
+  const overlay = document.querySelector<HTMLDivElement>('.cky-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
 };
 
 export const closeOrRejectDrCookie = () => {
@@ -202,4 +224,59 @@ export const closeOrRejectACookie = () => {
     return true;
   }
   return false;
+};
+
+// Sourcepoint renders consent UI inside a cross-origin iframe,
+// so we cannot click buttons and instead remove the container.
+export const closeSourcepoint = () => {
+  const containers = document.querySelectorAll<HTMLDivElement>(
+    '[id^="sp_message_container"]'
+  );
+  if (containers.length === 0) {
+    return false;
+  }
+  containers.forEach((container) => container.remove());
+  document.documentElement.classList.remove('sp-message-open');
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectQuantcast = () => {
+  // Quantcast CMP v2
+  const container = document.getElementById('qc-cmp2-container');
+  if (container) {
+    const rejectBtn =
+      container.querySelector<HTMLButtonElement>('[class*="reject"]') ||
+      container.querySelector<HTMLButtonElement>('button[mode="secondary"]');
+    if (rejectBtn) {
+      rejectBtn.click();
+      return true;
+    }
+    container.remove();
+    return true;
+  }
+
+  // Quantcast CMP v1
+  const v1Container = document.querySelector<HTMLDivElement>('.qc-cmp-ui-container');
+  if (v1Container) {
+    v1Container.remove();
+    return true;
+  }
+
+  return false;
+};
+
+export const closeOrRejectIubenda = () => {
+  const banner = document.getElementById('iubenda-cs-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('.iubenda-cs-reject-btn');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+  banner.remove();
+  return true;
 };

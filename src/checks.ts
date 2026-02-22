@@ -19,3 +19,10 @@ export const checkForTrustee = (): boolean => !!document.getElementById('truste-
 export const checkForCmplz = (): boolean =>
   !!document.getElementById('cmplz-cookiebanner-container');
 export const checkForACookie = (): boolean => !!document.getElementById('a-cookie--message');
+export const checkForSourcepoint = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[id^="sp_message_container"]');
+export const checkForQuantcast = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.qc-cmp-ui-container') ||
+  !!document.getElementById('qc-cmp2-container');
+export const checkForIubenda = (): boolean =>
+  !!document.getElementById('iubenda-cs-banner');
