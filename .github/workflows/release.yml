@@ -38,6 +38,54 @@ jobs:
       - name: Create zip
         run: cd dist && zip -r ../reject-cookies.zip . -x '*.map'
 
+      - name: Upload to Chrome Web Store
+        run: |
+          ACCESS_TOKEN=$(curl -s -X POST "https://oauth2.googleapis.com/token" \
+            -d "client_id=${{ secrets.CHROME_CLIENT_ID }}" \
+            -d "client_secret=${{ secrets.CHROME_CLIENT_SECRET }}" \
+            -d "refresh_token=${{ secrets.CHROME_REFRESH_TOKEN }}" \
+            -d "grant_type=refresh_token" | jq -r '.access_token')
+
+          if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
+            echo "::error::Failed to obtain access token"
+            exit 1
+          fi
+
+          UPLOAD_RESPONSE=$(curl -s -w "\n%{http_code}" -X PUT \
+            "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${{ secrets.CHROME_EXTENSION_ID }}" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "x-goog-api-version: 2" \
+            -T reject-cookies.zip)
+
+          HTTP_CODE=$(echo "$UPLOAD_RESPONSE" | tail -1)
+          BODY=$(echo "$UPLOAD_RESPONSE" | sed '$d')
+          echo "Upload response ($HTTP_CODE): $BODY"
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::Upload failed with status $HTTP_CODE"
+            exit 1
+          fi
+
+          UPLOAD_STATE=$(echo "$BODY" | jq -r '.uploadState // empty')
+          if [ "$UPLOAD_STATE" = "FAILURE" ]; then
+            echo "::error::Upload returned 200 but uploadState is FAILURE"
+            exit 1
+          fi
+
+          PUBLISH_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://www.googleapis.com/chromewebstore/v1.1/items/${{ secrets.CHROME_EXTENSION_ID }}/publish" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "x-goog-api-version: 2")
+
+          HTTP_CODE=$(echo "$PUBLISH_RESPONSE" | tail -1)
+          BODY=$(echo "$PUBLISH_RESPONSE" | sed '$d')
+          echo "Publish response ($HTTP_CODE): $BODY"
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::Publish failed with status $HTTP_CODE"
+            exit 1
+          fi
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
