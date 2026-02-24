@@ -113,6 +113,7 @@ export const rejectCookieBot = () => {
     rejectButton.click();
     return true;
   }
+  // CookieBot: no removal fallback — declining is required
   return false;
 };
 ```
