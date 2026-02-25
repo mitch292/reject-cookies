@@ -25,7 +25,6 @@ Authorization: Bearer ${COOKIE_API_TOKEN}
 The response is a JSON array of report objects. Each report has at minimum:
 - `id` — Report ID (used for marking fixed and fetching snapshots)
 - `url` — The site URL where the cookie popup wasn't rejected
-- `cmp_provider` — The detected CMP provider name, or `"unknown"` / `null` if unidentified
 
 If the manifest is empty or the request fails, log the reason and exit cleanly — do not create a branch or PR.
 
@@ -40,23 +39,14 @@ Authorization: Bearer ${COOKIE_API_TOKEN}
 
 The response is the raw HTML of the page as captured by a headless browser.
 
-Analyze the HTML to determine what fix is needed:
+Analyze the HTML to identify which CMP is present and what fix is needed:
 
-### Known CMP (`cmp_provider` is set and not "unknown")
+1. **Check for known providers first.** Compare the HTML against the detection selectors for each existing provider in `src/checks.ts`. If a provider's container element is present, check whether its rejection button selectors (from `src/rejectFlows/`) still match. Identify any broken or missing selectors and find the correct replacements in the HTML.
 
-The CMP platform is already identified. Check our existing detection selectors and rejection selectors against the snapshot HTML:
-- Are the detection selectors (from `src/checks.ts`) present in the HTML?
-- Are the rejection button selectors (from `src/rejectFlows/`) present in the HTML?
-- Identify which selectors are broken or missing, and find the correct replacement selectors in the HTML
-
-### Unknown CMP (`cmp_provider` is "unknown" or null)
-
-Search the HTML for common CMP patterns:
-- Known container IDs/classes from our provider list (check if an existing provider matches but wasn't detected)
-- Common CMP framework signatures: OneTrust, CookieBot, Didomi, Quantcast, Sourcepoint, etc.
-- Generic cookie consent patterns: elements with "cookie", "consent", "gdpr" in IDs or classes
-
-If you identify the platform, treat it as a known CMP fix. If it's a genuinely new platform, you'll add a new provider.
+2. **Search for unrecognized CMPs.** If no existing provider matches, look for common CMP patterns:
+   - Common CMP framework signatures: OneTrust, CookieBot, Didomi, Quantcast, Sourcepoint, etc.
+   - Generic cookie consent patterns: elements with "cookie", "consent", "gdpr" in IDs or classes
+   - If you identify the platform, you'll add it as a new provider.
 
 ## Step 3 — Implement Code Changes
 
