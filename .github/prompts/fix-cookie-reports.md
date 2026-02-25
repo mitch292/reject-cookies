@@ -84,19 +84,26 @@ npm run build
 
 Both must pass. If lint reports auto-fixable issues, run `npm run lint` (it auto-fixes). If build fails, investigate and fix the error. If a specific provider's changes cause the failure, revert that provider's changes and exclude it from the fixed set.
 
-## Step 5 — Mark Reports Fixed
+## Step 5 — Update Report Statuses
 
-For each report that was successfully addressed (code changes made and verified), call:
+After analyzing and attempting fixes, update the status of **every** report in the manifest:
 
 ```
-PATCH ${COOKIE_API_BASE}/api/reports/mark-fixed
+PATCH ${COOKIE_API_BASE}/api/reports/update-status
 Authorization: Bearer ${COOKIE_API_TOKEN}
 Content-Type: application/json
 
-{ "report_ids": [1, 2, 3] }
+{
+  "reports": [
+    { "report_id": 1, "status": "fix_submitted" },
+    { "report_id": 2, "status": "invalid", "status_reason": "no cookie banner found in snapshot" }
+  ]
+}
 ```
 
-Only include IDs for reports where you actually made and verified code changes. Do not include skipped reports.
+Statuses:
+- `"fix_submitted"` — Code changes were made and verified for this report
+- `"invalid"` — The report is not actionable. Provide a `status_reason` explaining why (e.g., "no cookie banner found in snapshot", "site blocked by WAF", "page is a login wall with no CMP")
 
 ## Step 6 — Version Bump
 
