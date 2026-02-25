@@ -38,4 +38,6 @@ jobs:
           SNAPSHOT_COUNT: ${{ github.event.client_payload.snapshot_count }}
         run: |
           claude --print --dangerously-skip-permissions \
+            --model claude-opus-4-6 \
+            --max-turns 75 \
             "$(cat .github/prompts/fix-cookie-reports.md)"
