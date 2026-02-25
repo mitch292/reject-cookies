@@ -1,0 +1,43 @@
+name: Fix Cookie Reports
+
+on:
+  repository_dispatch:
+    types: [snapshots_ready]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fix-reports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Claude Code to fix cookie reports
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          COOKIE_API_TOKEN: ${{ secrets.COOKIE_API_TOKEN }}
+          COOKIE_API_BASE: ${{ vars.COOKIE_API_BASE }}
+          RUN_DATE: ${{ github.event.client_payload.run_date }}
+          SNAPSHOT_COUNT: ${{ github.event.client_payload.snapshot_count }}
+        run: |
+          claude --print --dangerously-skip-permissions \
+            --model claude-opus-4-6 \
+            --max-turns 75 \
+            "$(cat .github/prompts/fix-cookie-reports.md)"
