@@ -229,13 +229,11 @@ export const closeOrRejectACookie = () => {
 // Sourcepoint renders consent UI inside a cross-origin iframe,
 // so we cannot click buttons and instead remove the container.
 export const closeSourcepoint = () => {
-  const containers = document.querySelectorAll<HTMLDivElement>(
-    '[id^="sp_message_container"]'
-  );
+  const containers = document.querySelectorAll<HTMLDivElement>('[id^="sp_message_container"]');
   if (containers.length === 0) {
     return false;
   }
-  containers.forEach((container) => container.remove());
+  containers.forEach(container => container.remove());
   document.documentElement.classList.remove('sp-message-open');
   document.body.style.overflow = '';
   return true;
@@ -279,4 +277,31 @@ export const closeOrRejectIubenda = () => {
   }
   banner.remove();
   return true;
+};
+
+export const closeOrRejectFides = () => {
+  const overlay = document.getElementById('fides-overlay');
+  if (!overlay) {
+    return false;
+  }
+
+  const saveBtn = document.getElementById('fides-save-button') as HTMLButtonElement | null;
+  if (saveBtn) {
+    saveBtn.click();
+    cleanupFidesOverlay();
+    return true;
+  }
+
+  overlay.remove();
+  cleanupFidesOverlay();
+  return true;
+};
+
+const cleanupFidesOverlay = () => {
+  const modalOverlay = document.querySelector<HTMLDivElement>('.fides-modal-overlay');
+  if (modalOverlay) {
+    modalOverlay.remove();
+  }
+  document.body.classList.remove('fides-overlay-modal-link-shown');
+  document.body.style.overflow = '';
 };

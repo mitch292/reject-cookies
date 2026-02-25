@@ -6,6 +6,7 @@ import {
   checkForCookieYes,
   checkForDidomi,
   checkForDrCookie,
+  checkForFides,
   checkForGeneric,
   checkForIubenda,
   checkForOneTrust,
@@ -24,6 +25,7 @@ import {
   closeOrRejectCookieYes,
   closeOrRejectDidomi,
   closeOrRejectDrCookie,
+  closeOrRejectFides,
   closeOrRejectGeneric,
   closeOrRejectIubenda,
   closeOrRejectOneTrust,
@@ -139,6 +141,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'iubenda',
     check: checkForIubenda,
     rejectOrClose: closeOrRejectIubenda,
+    successful: false,
+  },
+  {
+    name: 'fides',
+    check: checkForFides,
+    rejectOrClose: closeOrRejectFides,
     successful: false,
   },
 ];
