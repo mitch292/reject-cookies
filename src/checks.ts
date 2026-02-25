@@ -24,5 +24,4 @@ export const checkForSourcepoint = (): boolean =>
 export const checkForQuantcast = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.qc-cmp-ui-container') ||
   !!document.getElementById('qc-cmp2-container');
-export const checkForIubenda = (): boolean =>
-  !!document.getElementById('iubenda-cs-banner');
+export const checkForIubenda = (): boolean => !!document.getElementById('iubenda-cs-banner');

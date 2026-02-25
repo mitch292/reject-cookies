@@ -1,6 +1,6 @@
 import { commonCookiePopupChecks } from './providers';
 
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 10;
 let currentAttempt = 0;
 
 // Function to find and click reject buttons
@@ -9,13 +9,13 @@ const findAndClickRejectButtons = () => {
     return;
   }
 
-  commonCookiePopupChecks.forEach(({ check, rejectOrClose, successful }) => {
-    if (check() && !successful) {
-      successful = rejectOrClose();
+  for (const provider of commonCookiePopupChecks) {
+    if (provider.check() && !provider.successful) {
+      provider.successful = provider.rejectOrClose();
       // assume that there is only one cookie consent provider and we can exit
-      return;
+      break;
     }
-  });
+  }
 
   currentAttempt++;
 };

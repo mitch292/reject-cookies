@@ -229,13 +229,11 @@ export const closeOrRejectACookie = () => {
 // Sourcepoint renders consent UI inside a cross-origin iframe,
 // so we cannot click buttons and instead remove the container.
 export const closeSourcepoint = () => {
-  const containers = document.querySelectorAll<HTMLDivElement>(
-    '[id^="sp_message_container"]'
-  );
+  const containers = document.querySelectorAll<HTMLDivElement>('[id^="sp_message_container"]');
   if (containers.length === 0) {
     return false;
   }
-  containers.forEach((container) => container.remove());
+  containers.forEach(container => container.remove());
   document.documentElement.classList.remove('sp-message-open');
   document.body.style.overflow = '';
   return true;
