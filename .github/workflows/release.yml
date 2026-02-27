@@ -20,9 +20,16 @@ jobs:
       - name: Check for version tag
         id: check-tag
         run: |
-          TAG=$(git tag --points-at HEAD | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+          # Check all commits introduced by this merge for a version tag
+          TAG=""
+          for commit in $(git log --format=%H HEAD ^HEAD~1); do
+            TAG=$(git tag --points-at "$commit" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+            if [ -n "$TAG" ]; then
+              break
+            fi
+          done
           if [ -z "$TAG" ]; then
-            echo "No version tag on this commit. Skipping release."
+            echo "No version tag found in merged commits. Skipping release."
             echo "has_tag=false" >> "$GITHUB_OUTPUT"
           else
             echo "Found version tag: $TAG"
