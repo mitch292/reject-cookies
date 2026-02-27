@@ -158,9 +158,14 @@ The main `rejectUserCentrics` function tries primary → secondary → tertiary 
 
 ## Version Bumping & Releases
 
-The version lives in `public/manifest.json` → `"version"` field (currently `0.0.5`). Bump the patch version (e.g., `0.0.5` → `0.0.6`) when making fixes.
+The version lives in `public/manifest.json` → `"version"` field (currently `0.0.6`). Bump the patch version (e.g., `0.0.6` → `0.0.7`) when making fixes.
 
-Git tags matching `v*` (e.g., `v0.0.6`) trigger the release workflow (`.github/workflows/release.yml`), which builds, generates checksums, and publishes to the Chrome Web Store.
+The release workflow (`.github/workflows/release.yml`) triggers on push to `main` and scans all merged commits for a `v*` tag. To release:
+
+1. Bump the version in `public/manifest.json` on your PR branch
+2. Tag the commit: `git tag v0.0.7 && git push origin v0.0.7`
+3. Merge the PR (must use **merge commit**, not squash — repo settings enforce this)
+4. The workflow detects the tag and builds, generates checksums, and publishes to the Chrome Web Store
 
 ## PR & Branch Conventions
 
