@@ -2,8 +2,8 @@ name: Build and Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -14,20 +14,46 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for version tag
+        id: check-tag
+        run: |
+          # Check all commits introduced by this merge for a version tag
+          TAG=""
+          for commit in $(git log --format=%H HEAD ^HEAD~1); do
+            TAG=$(git tag --points-at "$commit" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+            if [ -n "$TAG" ]; then
+              break
+            fi
+          done
+          if [ -z "$TAG" ]; then
+            echo "No version tag found in merged commits. Skipping release."
+            echo "has_tag=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Found version tag: $TAG"
+            echo "has_tag=true" >> "$GITHUB_OUTPUT"
+            echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Setup Node.js
+        if: steps.check-tag.outputs.has_tag == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install dependencies
+        if: steps.check-tag.outputs.has_tag == 'true'
         run: npm ci
 
       - name: Build extension
+        if: steps.check-tag.outputs.has_tag == 'true'
         run: npm run build
 
       - name: Generate checksums
+        if: steps.check-tag.outputs.has_tag == 'true'
         run: |
           cd dist
           find . -type f -not -name '*.map' | sort | xargs sha256sum > ../checksums.txt
@@ -36,9 +62,11 @@ jobs:
           cat checksums.txt
 
       - name: Create zip
+        if: steps.check-tag.outputs.has_tag == 'true'
         run: cd dist && zip -r ../reject-cookies.zip . -x '*.map'
 
       - name: Upload to Chrome Web Store
+        if: steps.check-tag.outputs.has_tag == 'true'
         run: |
           ACCESS_TOKEN=$(curl -s -X POST "https://oauth2.googleapis.com/token" \
             -d "client_id=${{ secrets.CHROME_CLIENT_ID }}" \
@@ -87,8 +115,10 @@ jobs:
           fi
 
       - name: Create GitHub Release
+        if: steps.check-tag.outputs.has_tag == 'true'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.check-tag.outputs.tag }}
           files: |
             reject-cookies.zip
             checksums.txt
