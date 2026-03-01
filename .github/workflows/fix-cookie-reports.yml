@@ -41,3 +41,25 @@ jobs:
             --model claude-opus-4-6 \
             --max-turns 75 \
             "$(cat .github/prompts/fix-cookie-reports.md)"
+
+      - name: Tag version if branch was pushed
+        run: |
+          # Only tag if the agent created a new branch with commits
+          BRANCH=$(git branch --show-current)
+          if [ "$BRANCH" = "main" ]; then
+            echo "Still on main — agent did not create a branch. Skipping tag."
+            exit 0
+          fi
+
+          VERSION=$(jq -r .version public/manifest.json)
+          TAG="v${VERSION}"
+
+          # Skip if this tag already exists
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists. Skipping."
+            exit 0
+          fi
+
+          git tag "$TAG"
+          git push origin "$TAG"
+          echo "Tagged and pushed $TAG"
