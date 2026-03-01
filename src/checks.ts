@@ -24,5 +24,10 @@ export const checkForSourcepoint = (): boolean =>
 export const checkForQuantcast = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.qc-cmp-ui-container') ||
   !!document.getElementById('qc-cmp2-container');
-export const checkForIubenda = (): boolean =>
-  !!document.getElementById('iubenda-cs-banner');
+export const checkForIubenda = (): boolean => !!document.getElementById('iubenda-cs-banner');
+export const checkForFides = (): boolean => !!document.getElementById('fides-banner');
+export const checkForDelve = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.delve-cookie-banner');
+export const checkForNikeCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-testid="cookie-modal-root"]');
+export const checkForEbayGDPR = (): boolean => !!document.getElementById('gdpr-banner');
