@@ -107,7 +107,7 @@ Statuses:
 
 ## Step 6 — Version Bump
 
-If any code changes were made, increment the patch version in `public/manifest.json`. For example, `0.0.5` becomes `0.0.6`. Only bump once regardless of how many providers were fixed. After committing (in Step 7), tag the commit with the same version prefixed with `v` (e.g., `git tag v0.0.6`). Push the tag along with the branch — this triggers the release workflow.
+If any code changes were made, increment the patch version in `public/manifest.json`. For example, `0.0.5` becomes `0.0.6`. Only bump once regardless of how many providers were fixed. Do not create a git tag — tagging is handled automatically by the workflow after this step.
 
 ## Step 7 — Commit, Push, and Create PR
 
@@ -116,9 +116,8 @@ Create a branch, commit, push, and open a PR:
 1. **Branch name:** `fix/cookie-reports-${RUN_DATE}`
 2. **Stage only modified/new files explicitly** — do not use `git add .` or `git add -A`
 3. **Commit message:** Concise summary like `Fix cookie rejection for [site1], [site2]` or `Add new provider [name] and fix [site]`
-4. **Tag** the commit with the new version: `git tag v<new_version>` (e.g., `git tag v0.0.6`)
-5. **Push** the branch and tag to origin: `git push -u origin <branch> --follow-tags`
-6. **Create a PR** with this body format:
+4. **Push** the branch to origin: `git push -u origin <branch>`
+5. **Create a PR** with this body format:
 
 ```markdown
 ## Summary
