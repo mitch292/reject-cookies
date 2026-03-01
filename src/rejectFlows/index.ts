@@ -229,13 +229,11 @@ export const closeOrRejectACookie = () => {
 // Sourcepoint renders consent UI inside a cross-origin iframe,
 // so we cannot click buttons and instead remove the container.
 export const closeSourcepoint = () => {
-  const containers = document.querySelectorAll<HTMLDivElement>(
-    '[id^="sp_message_container"]'
-  );
+  const containers = document.querySelectorAll<HTMLDivElement>('[id^="sp_message_container"]');
   if (containers.length === 0) {
     return false;
   }
-  containers.forEach((container) => container.remove());
+  containers.forEach(container => container.remove());
   document.documentElement.classList.remove('sp-message-open');
   document.body.style.overflow = '';
   return true;
@@ -277,6 +275,97 @@ export const closeOrRejectIubenda = () => {
     rejectBtn.click();
     return true;
   }
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectFides = () => {
+  const banner = document.getElementById('fides-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('fides-reject-all-button');
+  if (rejectBtn) {
+    rejectBtn.click();
+    cleanupFidesOverlay();
+    return true;
+  }
+
+  const bannerContainer = document.getElementById('fides-banner-container');
+  if (bannerContainer) {
+    bannerContainer.remove();
+  } else {
+    banner.remove();
+  }
+  cleanupFidesOverlay();
+  return true;
+};
+
+const cleanupFidesOverlay = () => {
+  const overlay = document.getElementById('fides-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.style.overflow = '';
+};
+
+export const closeOrRejectDelve = () => {
+  const banner = document.querySelector<HTMLDivElement>('.delve-cookie-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('button[data-action="reject"]');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectNikeCookie = () => {
+  const modal = document.querySelector<HTMLDivElement>('[data-testid="cookie-modal-root"]');
+  if (!modal) {
+    return false;
+  }
+
+  const declineBtn = modal.querySelector<HTMLButtonElement>(
+    'button[data-testid="modal-decline-button"]'
+  );
+  if (declineBtn) {
+    declineBtn.click();
+    cleanupNikeCookieOverlay();
+    return true;
+  }
+
+  modal.remove();
+  cleanupNikeCookieOverlay();
+  return true;
+};
+
+const cleanupNikeCookieOverlay = () => {
+  const backdrop = document.querySelector<HTMLDivElement>('[data-testid="modal-backdrop"]');
+  if (backdrop) {
+    backdrop.remove();
+  }
+  document.body.style.overflow = '';
+};
+
+export const closeOrRejectEbayGDPR = () => {
+  const banner = document.getElementById('gdpr-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const declineBtn = document.getElementById('gdpr-banner-decline');
+  if (declineBtn) {
+    declineBtn.click();
+    return true;
+  }
+
   banner.remove();
   return true;
 };
