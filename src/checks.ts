@@ -31,3 +31,10 @@ export const checkForDelve = (): boolean =>
 export const checkForNikeCookie = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[data-testid="cookie-modal-root"]');
 export const checkForEbayGDPR = (): boolean => !!document.getElementById('gdpr-banner');
+export const checkForFreeChoice = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.fc-consent-root');
+export const checkForWixCookieBanner = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-hook="consent-banner-root"]');
+export const checkForYahooGUCE = (): boolean => !!document.getElementById('consent-page');
+export const checkForXCookieBanner = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-testid="BottomBar"]');

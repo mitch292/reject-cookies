@@ -369,3 +369,85 @@ export const closeOrRejectEbayGDPR = () => {
   banner.remove();
   return true;
 };
+
+export const closeOrRejectFreeChoice = () => {
+  const root = document.querySelector<HTMLDivElement>('.fc-consent-root');
+  if (!root) {
+    return false;
+  }
+
+  root.remove();
+  const overlay = document.querySelector<HTMLDivElement>('.fc-dialog-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectWixCookieBanner = () => {
+  const banner = document.querySelector<HTMLDivElement>('[data-hook="consent-banner-root"]');
+  if (!banner) {
+    return false;
+  }
+
+  const closeBtn = banner.querySelector<HTMLButtonElement>(
+    '[data-hook="consent-banner-close-button"]'
+  );
+  if (closeBtn) {
+    closeBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectYahooGUCE = () => {
+  const page = document.getElementById('consent-page');
+  if (!page) {
+    return false;
+  }
+
+  const rejectBtn = page.querySelector<HTMLButtonElement>('button[name="reject"]');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  const rejectAllBtn = page.querySelector<HTMLButtonElement>('.reject-all');
+  if (rejectAllBtn) {
+    rejectAllBtn.click();
+    return true;
+  }
+
+  page.remove();
+  const overlay = document.querySelector<HTMLDivElement>('.consent-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectXCookieBanner = () => {
+  const bottomBar = document.querySelector<HTMLDivElement>('[data-testid="BottomBar"]');
+  if (!bottomBar) {
+    return false;
+  }
+
+  const buttons = bottomBar.querySelectorAll<HTMLButtonElement>('button[role="button"]');
+  let clicked = false;
+  buttons.forEach((btn) => {
+    if (!clicked && btn.textContent?.includes('Refuse non-essential')) {
+      btn.click();
+      clicked = true;
+    }
+  });
+  if (clicked) {
+    return true;
+  }
+
+  bottomBar.remove();
+  return true;
+};
