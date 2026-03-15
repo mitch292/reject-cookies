@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Reject Cookies",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Automatically rejects cookie popups on websites",
   "permissions": ["sidePanel", "tabs"],
   "content_scripts": [

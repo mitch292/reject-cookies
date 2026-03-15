@@ -243,13 +243,28 @@ export const closeOrRejectQuantcast = () => {
   // Quantcast CMP v2
   const container = document.getElementById('qc-cmp2-container');
   if (container) {
-    const rejectBtn =
-      container.querySelector<HTMLButtonElement>('[class*="reject"]') ||
-      container.querySelector<HTMLButtonElement>('button[mode="secondary"]');
+    const rejectBtn = container.querySelector<HTMLButtonElement>('[class*="reject"]');
     if (rejectBtn) {
       rejectBtn.click();
       return true;
     }
+
+    // Find the DISAGREE button by text content among secondary buttons
+    const secondaryBtns = container.querySelectorAll<HTMLButtonElement>('button[mode="secondary"]');
+    let clicked = false;
+    secondaryBtns.forEach(btn => {
+      if (!clicked) {
+        const text = btn.textContent?.trim().toUpperCase();
+        if (text === 'DISAGREE' || text === 'REJECT ALL' || text === 'DENY') {
+          btn.click();
+          clicked = true;
+        }
+      }
+    });
+    if (clicked) {
+      return true;
+    }
+
     container.remove();
     return true;
   }
@@ -438,7 +453,7 @@ export const closeOrRejectXCookieBanner = () => {
 
   const buttons = bottomBar.querySelectorAll<HTMLButtonElement>('button[role="button"]');
   let clicked = false;
-  buttons.forEach((btn) => {
+  buttons.forEach(btn => {
     if (!clicked && btn.textContent?.includes('Refuse non-essential')) {
       btn.click();
       clicked = true;
