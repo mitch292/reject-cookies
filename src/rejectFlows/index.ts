@@ -466,3 +466,30 @@ export const closeOrRejectXCookieBanner = () => {
   bottomBar.remove();
   return true;
 };
+
+export const closeOrRejectCookieBar = () => {
+  const banner = document.querySelector<HTMLDivElement>('.js-cookiebar');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('.js-cookie-deny');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectUniConsent = () => {
+  const banner = document.getElementById('uniccmp');
+  if (!banner) {
+    return false;
+  }
+
+  banner.remove();
+  document.body.style.overflow = '';
+  return true;
+};

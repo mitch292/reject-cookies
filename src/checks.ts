@@ -38,3 +38,6 @@ export const checkForWixCookieBanner = (): boolean =>
 export const checkForYahooGUCE = (): boolean => !!document.getElementById('consent-page');
 export const checkForXCookieBanner = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[data-testid="BottomBar"]');
+export const checkForCookieBar = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.js-cookiebar');
+export const checkForUniConsent = (): boolean => !!document.getElementById('uniccmp');

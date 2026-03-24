@@ -24,6 +24,8 @@ import {
   checkForWixCookieBanner,
   checkForXCookieBanner,
   checkForYahooGUCE,
+  checkForCookieBar,
+  checkForUniConsent,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -46,6 +48,8 @@ import {
   closeOrRejectWixCookieBanner,
   closeOrRejectXCookieBanner,
   closeOrRejectYahooGUCE,
+  closeOrRejectCookieBar,
+  closeOrRejectUniConsent,
   closeSourcepoint,
   closeTranscend,
   rejectCookieBot,
@@ -203,6 +207,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'x-cookie-banner',
     check: checkForXCookieBanner,
     rejectOrClose: closeOrRejectXCookieBanner,
+    successful: false,
+  },
+  {
+    name: 'cookiebar',
+    check: checkForCookieBar,
+    rejectOrClose: closeOrRejectCookieBar,
+    successful: false,
+  },
+  {
+    name: 'uniconsent',
+    check: checkForUniConsent,
+    rejectOrClose: closeOrRejectUniConsent,
     successful: false,
   },
 ];
