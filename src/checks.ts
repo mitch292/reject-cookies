@@ -41,3 +41,7 @@ export const checkForXCookieBanner = (): boolean =>
 export const checkForCookieBar = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.js-cookiebar');
 export const checkForUniConsent = (): boolean => !!document.getElementById('uniccmp');
+export const checkForPopupBox = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('#popup-box.popup-box');
+export const checkForXHCookiesModal = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-role="cookies-modal"]');

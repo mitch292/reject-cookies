@@ -493,3 +493,37 @@ export const closeOrRejectUniConsent = () => {
   document.body.style.overflow = '';
   return true;
 };
+
+export const closeOrRejectPopupBox = () => {
+  const popup = document.querySelector<HTMLDivElement>('#popup-box.popup-box');
+  if (!popup) {
+    return false;
+  }
+
+  const refuseBtn = popup.querySelector<HTMLButtonElement>('button[onclick*="refuse"]');
+  if (refuseBtn) {
+    refuseBtn.click();
+    return true;
+  }
+
+  popup.remove();
+  return true;
+};
+
+export const closeOrRejectXHCookiesModal = () => {
+  const modal = document.querySelector<HTMLDivElement>('[data-role="cookies-modal"]');
+  if (!modal) {
+    return false;
+  }
+
+  const closeBtn = modal.querySelector<HTMLButtonElement>('button');
+  if (closeBtn) {
+    closeBtn.click();
+    document.body.classList.remove('xh-scroll-disabled');
+    return true;
+  }
+
+  modal.remove();
+  document.body.classList.remove('xh-scroll-disabled');
+  return true;
+};
