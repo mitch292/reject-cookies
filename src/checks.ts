@@ -45,3 +45,12 @@ export const checkForPopupBox = (): boolean =>
   !!document.querySelector<HTMLDivElement>('#popup-box.popup-box');
 export const checkForXHCookiesModal = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[data-role="cookies-modal"]');
+export const checkForCookieScript = (): boolean =>
+  !!document.getElementById('cookiescript_injected');
+export const checkForAWSCCC = (): boolean => !!document.getElementById('awsccc-cb-c');
+export const checkForSquarespaceCookie = (): boolean =>
+  !!document.querySelector<HTMLElement>('.gdpr-cookie-banner');
+export const checkForTermly = (): boolean =>
+  !!document.getElementById('termly-code-snippet-support');
+export const checkForPornhubCookie = (): boolean =>
+  !!document.getElementById('globalCookieBanner') || !!document.getElementById('cookieBanner');

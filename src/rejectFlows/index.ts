@@ -51,6 +51,20 @@ export const rejectCookieBot = () => {
     rejectButton.click();
     return true;
   }
+
+  // DR.dk uses a custom CookieBot wrapper with its own buttons
+  const drOverlay = document.getElementById('drcc-overlay');
+  if (drOverlay) {
+    const submitChosenBtn = drOverlay.querySelector<HTMLButtonElement>('button.submitChosen');
+    if (submitChosenBtn) {
+      submitChosenBtn.click();
+      drOverlay.remove();
+      document.body.classList.remove('noscroll');
+      document.body.style.overflow = '';
+      return true;
+    }
+  }
+
   return false;
 };
 
@@ -290,6 +304,23 @@ export const closeOrRejectIubenda = () => {
     rejectBtn.click();
     return true;
   }
+
+  // Adasta wrapper strips .iubenda-cs-reject-btn and replaces it with
+  // .adasta-show-second-page. Clicking it opens an overlay that contains
+  // the real .iubenda-cs-reject-btn on the next retry pass.
+  const adastaBtn = banner.querySelector<HTMLButtonElement>('.adasta-show-second-page');
+  if (adastaBtn) {
+    adastaBtn.click();
+    return false;
+  }
+
+  // Check for the Adasta overlay reject button (appears after first click)
+  const adastaRejectBtn = document.querySelector<HTMLButtonElement>('.adasta-reject-button');
+  if (adastaRejectBtn) {
+    adastaRejectBtn.click();
+    return true;
+  }
+
   banner.remove();
   return true;
 };
@@ -526,4 +557,118 @@ export const closeOrRejectXHCookiesModal = () => {
   modal.remove();
   document.body.classList.remove('xh-scroll-disabled');
   return true;
+};
+
+export const rejectCookieScript = () => {
+  const banner = document.getElementById('cookiescript_injected');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('cookiescript_reject');
+  if (rejectBtn) {
+    rejectBtn.click();
+    document.body.classList.remove('cookiescript_overlay');
+    document.body.style.overflow = '';
+    return true;
+  }
+
+  const wrapper = document.getElementById('cookiescript_injected_wrapper');
+  if (wrapper) {
+    wrapper.remove();
+  } else {
+    banner.remove();
+  }
+  document.body.classList.remove('cookiescript_overlay');
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const rejectAWSCCC = () => {
+  const banner = document.getElementById('awsccc-cb-c');
+  if (!banner) {
+    return false;
+  }
+
+  const declineBtn = document.getElementById('awsccc-cb-btn-decline');
+  if (declineBtn) {
+    declineBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectSquarespaceCookie = () => {
+  const banner = document.querySelector<HTMLElement>('.gdpr-cookie-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const declineBtn = banner.querySelector<HTMLButtonElement>('button.sqs-cookie-banner-v2-deny');
+  if (declineBtn) {
+    declineBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const rejectTermly = () => {
+  const container = document.getElementById('termly-code-snippet-support');
+  if (!container) {
+    return false;
+  }
+
+  const declineBtn = container.querySelector<HTMLButtonElement>('[data-tid="banner-decline"]');
+  if (declineBtn) {
+    declineBtn.click();
+    return true;
+  }
+
+  const prompt = container.querySelector<HTMLElement>('.t-consentPrompt');
+  if (prompt) {
+    prompt.remove();
+    return true;
+  }
+
+  return false;
+};
+
+export const closeOrRejectPornhubCookie = () => {
+  // Full cookie banner with reject option
+  const fullBanner = document.getElementById('cookieBanner');
+  if (fullBanner && !fullBanner.classList.contains('hidden')) {
+    const rejectBtn = fullBanner.querySelector<HTMLButtonElement>('.cbSecondaryCTA');
+    if (rejectBtn) {
+      rejectBtn.click();
+      return true;
+    }
+    const closeBtn = fullBanner.querySelector<HTMLButtonElement>('.cbCloseButton');
+    if (closeBtn) {
+      closeBtn.click();
+      return true;
+    }
+  }
+
+  // Global cookie banner — no reject button, click customize to open full banner
+  const globalBanner = document.getElementById('globalCookieBanner');
+  if (globalBanner && !globalBanner.classList.contains('hidden')) {
+    const customizeBtn = globalBanner.querySelector<HTMLButtonElement>(
+      '.js-customizeGlobalCookies'
+    );
+    if (customizeBtn) {
+      customizeBtn.click();
+      return false;
+    }
+    const closeBtn = globalBanner.querySelector<HTMLButtonElement>('.js-closeGlobalBanner');
+    if (closeBtn) {
+      closeBtn.click();
+      return true;
+    }
+  }
+
+  return false;
 };
