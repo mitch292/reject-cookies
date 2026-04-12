@@ -54,3 +54,5 @@ export const checkForTermly = (): boolean =>
   !!document.getElementById('termly-code-snippet-support');
 export const checkForPornhubCookie = (): boolean =>
   !!document.getElementById('globalCookieBanner') || !!document.getElementById('cookieBanner');
+export const checkForCookieConsent = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.cc-window');
