@@ -263,6 +263,13 @@ export const closeOrRejectQuantcast = () => {
       return true;
     }
 
+    // Try the disagree button by its stable ID (works across all languages)
+    const disagreeBtn = document.getElementById('disagree-btn') as HTMLButtonElement | null;
+    if (disagreeBtn) {
+      disagreeBtn.click();
+      return true;
+    }
+
     // Find the DISAGREE button by text content among secondary buttons
     const secondaryBtns = container.querySelectorAll<HTMLButtonElement>('button[mode="secondary"]');
     let clicked = false;
@@ -635,6 +642,22 @@ export const rejectTermly = () => {
   }
 
   return false;
+};
+
+export const closeOrRejectCookieConsent = () => {
+  const banner = document.querySelector<HTMLDivElement>('.cc-window');
+  if (!banner) {
+    return false;
+  }
+
+  const denyBtn = banner.querySelector<HTMLButtonElement>('.cc-btn.cc-deny');
+  if (denyBtn) {
+    denyBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
 };
 
 export const closeOrRejectPornhubCookie = () => {

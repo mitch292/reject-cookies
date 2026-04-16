@@ -4,6 +4,7 @@ import {
   checkForCC,
   checkForCmplz,
   checkForCookieBot,
+  checkForCookieConsent,
   checkForCookieScript,
   checkForCookieYes,
   checkForDelve,
@@ -58,6 +59,7 @@ import {
   closeOrRejectXCookieBanner,
   closeOrRejectYahooGUCE,
   closeOrRejectCookieBar,
+  closeOrRejectCookieConsent,
   closeOrRejectPopupBox,
   closeOrRejectUniConsent,
   closeOrRejectXHCookiesModal,
@@ -275,6 +277,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'pornhub-cookie',
     check: checkForPornhubCookie,
     rejectOrClose: closeOrRejectPornhubCookie,
+    successful: false,
+  },
+  {
+    name: 'cookieconsent',
+    check: checkForCookieConsent,
+    rejectOrClose: closeOrRejectCookieConsent,
     successful: false,
   },
 ];
