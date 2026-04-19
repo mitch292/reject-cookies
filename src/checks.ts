@@ -56,3 +56,8 @@ export const checkForPornhubCookie = (): boolean =>
   !!document.getElementById('globalCookieBanner') || !!document.getElementById('cookieBanner');
 export const checkForCookieConsent = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.cc-window');
+export const checkForWorkableCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-ui="cookie-consent"]');
+export const checkForWebToffee = (): boolean => !!document.getElementById('cookie-law-info-bar');
+export const checkForBorgerCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.js-cookiebanner');

@@ -660,6 +660,71 @@ export const closeOrRejectCookieConsent = () => {
   return true;
 };
 
+export const closeOrRejectWorkableCookie = () => {
+  const dialog = document.querySelector<HTMLDivElement>('[data-ui="cookie-consent"]');
+  if (!dialog) {
+    return false;
+  }
+
+  const declineBtn = dialog.querySelector<HTMLButtonElement>(
+    'button[data-ui="cookie-consent-decline"]'
+  );
+  if (declineBtn) {
+    declineBtn.click();
+    return true;
+  }
+
+  dialog.remove();
+  const backdrop = document.querySelector<HTMLDivElement>('[data-ui="backdrop"]');
+  if (backdrop) {
+    backdrop.remove();
+  }
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectWebToffee = () => {
+  const banner = document.getElementById('cookie-law-info-bar');
+  if (!banner) {
+    return false;
+  }
+
+  const container = document.querySelector<HTMLDivElement>('.wt-cli-cookie-bar-container');
+  if (container) {
+    container.remove();
+  } else {
+    banner.remove();
+  }
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectBorgerCookie = () => {
+  const banner = document.querySelector<HTMLDivElement>('.js-cookiebanner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('RejectCookieLawButton') as HTMLButtonElement | null;
+  if (rejectBtn) {
+    rejectBtn.click();
+    cleanupBorgerOverlay();
+    return true;
+  }
+
+  banner.remove();
+  cleanupBorgerOverlay();
+  return true;
+};
+
+const cleanupBorgerOverlay = () => {
+  const backdrop = document.querySelector<HTMLDivElement>('.dialog-backdrop');
+  if (backdrop) {
+    backdrop.remove();
+  }
+  document.body.style.overflow = '';
+};
+
 export const closeOrRejectPornhubCookie = () => {
   // Full cookie banner with reject option
   const fullBanner = document.getElementById('cookieBanner');
