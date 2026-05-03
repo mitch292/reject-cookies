@@ -61,3 +61,8 @@ export const checkForWorkableCookie = (): boolean =>
 export const checkForWebToffee = (): boolean => !!document.getElementById('cookie-law-info-bar');
 export const checkForBorgerCookie = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.js-cookiebanner');
+export const checkForEzoic = (): boolean => !!document.getElementById('ez-cookie-dialog-wrapper');
+export const checkForGitBookCookies = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-testid="cookies-dialog"]');
+export const checkForOneUptimeCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('#cookie.cookie-banner');
