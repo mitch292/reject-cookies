@@ -725,6 +725,60 @@ const cleanupBorgerOverlay = () => {
   document.body.style.overflow = '';
 };
 
+export const closeOrRejectEzoic = () => {
+  const wrapper = document.getElementById('ez-cookie-dialog-wrapper');
+  if (!wrapper) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('ez-reject-all') as HTMLButtonElement | null;
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  const container = document.getElementById('ez-cmpv2-container');
+  if (container) {
+    container.remove();
+  } else {
+    wrapper.remove();
+  }
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectGitBookCookies = () => {
+  const dialog = document.querySelector<HTMLDivElement>('[data-testid="cookies-dialog"]');
+  if (!dialog) {
+    return false;
+  }
+
+  const closeBtn = dialog.querySelector<HTMLButtonElement>('button[aria-label="Close"]');
+  if (closeBtn) {
+    closeBtn.click();
+    return true;
+  }
+
+  dialog.remove();
+  return true;
+};
+
+export const closeOrRejectOneUptimeCookie = () => {
+  const banner = document.querySelector<HTMLDivElement>('#cookie.cookie-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('button[onclick*="rejectCookies"]');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
 export const closeOrRejectPornhubCookie = () => {
   // Full cookie banner with reject option
   const fullBanner = document.getElementById('cookieBanner');
