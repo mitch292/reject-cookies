@@ -66,3 +66,8 @@ export const checkForGitBookCookies = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[data-testid="cookies-dialog"]');
 export const checkForOneUptimeCookie = (): boolean =>
   !!document.querySelector<HTMLDivElement>('#cookie.cookie-banner');
+export const checkForSubstackCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[class*="cookieBanner-"]');
+export const checkForAliExpressGDPR = (): boolean =>
+  !!document.getElementById('gdpr-new-container');
+export const checkForCookieNotice = (): boolean => !!document.getElementById('cookieNotice');

@@ -48,6 +48,13 @@ export const rejectCookieBot = () => {
   }
   const rejectButton = document.getElementById('CybotCookiebotDialogBodyButtonDecline');
   if (rejectButton) {
+    if (rejectButton.classList.contains('CybotCookiebotDialogHide')) {
+      const customizeBtn = document.getElementById('CybotCookiebotDialogBodyLevelButtonCustomize');
+      if (customizeBtn) {
+        customizeBtn.click();
+        return false;
+      }
+    }
     rejectButton.click();
     return true;
   }
@@ -773,6 +780,61 @@ export const closeOrRejectOneUptimeCookie = () => {
   if (rejectBtn) {
     rejectBtn.click();
     return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectSubstackCookie = () => {
+  const banner = document.querySelector<HTMLDivElement>('[class*="cookieBanner-"]');
+  if (!banner) {
+    return false;
+  }
+
+  const buttons = banner.querySelectorAll<HTMLButtonElement>('button');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked) {
+      const text = btn.textContent?.trim().toLowerCase();
+      if (text === 'reject') {
+        btn.click();
+        clicked = true;
+      }
+    }
+  });
+  if (clicked) {
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectAliExpressGDPR = () => {
+  const container = document.getElementById('gdpr-new-container');
+  if (!container) {
+    return false;
+  }
+
+  const buttons = container.querySelectorAll<HTMLButtonElement>('button');
+  if (buttons.length === 3) {
+    buttons[1].click();
+    return true;
+  }
+
+  container.remove();
+  const wrapper = document.getElementById('voyager-gdpr-2025');
+  if (wrapper) {
+    wrapper.remove();
+  }
+  return true;
+};
+
+export const closeOrRejectCookieNotice = () => {
+  const banner = document.getElementById('cookieNotice');
+  if (!banner) {
+    return false;
   }
 
   banner.remove();

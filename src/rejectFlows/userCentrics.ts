@@ -4,7 +4,12 @@ export const rejectUserCentricsPrimaryFlow = () => {
     return false;
   }
 
-  const rejectBtn = shadowDOMHost.shadowRoot?.querySelector<HTMLButtonElement>(
+  const shadowRoot = shadowDOMHost.shadowRoot;
+  if (!shadowRoot) {
+    return false;
+  }
+
+  const rejectBtn = shadowRoot.querySelector<HTMLButtonElement>(
     '[data-testid="uc-deny-all-button"]'
   );
   if (rejectBtn) {
@@ -23,7 +28,12 @@ export const rejectUserCentricsSecondaryFlow = () => {
     return false;
   }
 
-  const rejectBtn = shadowDOMHost.shadowRoot?.getElementById('deny');
+  const shadowRoot = shadowDOMHost.shadowRoot;
+  if (!shadowRoot) {
+    return false;
+  }
+
+  const rejectBtn = shadowRoot.getElementById('deny');
   if (rejectBtn) {
     rejectBtn.click();
     cleanupUserCentricsOverlay();
