@@ -20,6 +20,7 @@ import {
   checkForGeneric,
   checkForGitBookCookies,
   checkForIubenda,
+  checkForKetch,
   checkForNikeCookie,
   checkForOneTrust,
   checkForOneUptimeCookie,
@@ -74,6 +75,7 @@ import {
   closeOrRejectCookieNotice,
   closeOrRejectEzoic,
   closeOrRejectGitBookCookies,
+  closeOrRejectKetch,
   closeOrRejectOneUptimeCookie,
   closeOrRejectPopupBox,
   closeOrRejectSubstackCookie,
@@ -355,6 +357,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'cookie-notice',
     check: checkForCookieNotice,
     rejectOrClose: closeOrRejectCookieNotice,
+    successful: false,
+  },
+  {
+    name: 'ketch',
+    check: checkForKetch,
+    rejectOrClose: closeOrRejectKetch,
     successful: false,
   },
 ];

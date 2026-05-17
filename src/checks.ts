@@ -71,3 +71,4 @@ export const checkForSubstackCookie = (): boolean =>
 export const checkForAliExpressGDPR = (): boolean =>
   !!document.getElementById('gdpr-new-container');
 export const checkForCookieNotice = (): boolean => !!document.getElementById('cookieNotice');
+export const checkForKetch = (): boolean => !!document.getElementById('lanyard_root');
