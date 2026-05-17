@@ -66,3 +66,4 @@ export const checkForGitBookCookies = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[data-testid="cookies-dialog"]');
 export const checkForOneUptimeCookie = (): boolean =>
   !!document.querySelector<HTMLDivElement>('#cookie.cookie-banner');
+export const checkForKetch = (): boolean => !!document.getElementById('lanyard_root');

@@ -18,6 +18,7 @@ import {
   checkForGeneric,
   checkForGitBookCookies,
   checkForIubenda,
+  checkForKetch,
   checkForNikeCookie,
   checkForOneTrust,
   checkForOneUptimeCookie,
@@ -69,6 +70,7 @@ import {
   closeOrRejectCookieConsent,
   closeOrRejectEzoic,
   closeOrRejectGitBookCookies,
+  closeOrRejectKetch,
   closeOrRejectOneUptimeCookie,
   closeOrRejectPopupBox,
   closeOrRejectUniConsent,
@@ -331,6 +333,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'oneuptime-cookie',
     check: checkForOneUptimeCookie,
     rejectOrClose: closeOrRejectOneUptimeCookie,
+    successful: false,
+  },
+  {
+    name: 'ketch',
+    check: checkForKetch,
+    rejectOrClose: closeOrRejectKetch,
     successful: false,
   },
 ];
