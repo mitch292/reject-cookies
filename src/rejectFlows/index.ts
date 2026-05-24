@@ -867,6 +867,31 @@ export const closeOrRejectKetch = () => {
   return true;
 };
 
+export const closeOrRejectMdCookieAllow = () => {
+  const saveLink = document.getElementById('md_cookie_allow-button-save') as HTMLElement | null;
+  if (saveLink) {
+    saveLink.click();
+    return true;
+  }
+
+  const saveBtn = document.getElementById(
+    'md_cookie_allow-button-save2'
+  ) as HTMLButtonElement | null;
+  if (saveBtn) {
+    saveBtn.click();
+    return true;
+  }
+
+  const banner = document.querySelector<HTMLDivElement>(
+    '[id^="md_cookie_allow-"]:not([id$="-set"])'
+  );
+  if (banner) {
+    banner.remove();
+    return true;
+  }
+  return false;
+};
+
 export const closeOrRejectPornhubCookie = () => {
   // Full cookie banner with reject option
   const fullBanner = document.getElementById('cookieBanner');
