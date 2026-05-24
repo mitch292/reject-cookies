@@ -12,6 +12,13 @@ export const closeOrRejectOneTrust = () => {
     return true;
   }
 
+  const saveBtn = document.querySelector<HTMLButtonElement>('.save-preference-btn-handler');
+  if (saveBtn) {
+    saveBtn.click();
+    cleanupOneTrustOverlay();
+    return true;
+  }
+
   const consentSDK = document.getElementById('onetrust-consent-sdk');
   if (consentSDK) {
     consentSDK.remove();
@@ -838,6 +845,25 @@ export const closeOrRejectCookieNotice = () => {
   }
 
   banner.remove();
+  return true;
+};
+
+export const closeOrRejectKetch = () => {
+  const root = document.getElementById('lanyard_root');
+  if (!root) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById(
+    'ketch-banner-button-secondary'
+  ) as HTMLButtonElement | null;
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  root.remove();
+  document.body.style.overflow = '';
   return true;
 };
 
