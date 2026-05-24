@@ -44,6 +44,7 @@ import {
   checkForYahooGUCE,
   checkForCookieBar,
   checkForUniConsent,
+  checkForMdCookieAllow,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -76,6 +77,7 @@ import {
   closeOrRejectEzoic,
   closeOrRejectGitBookCookies,
   closeOrRejectKetch,
+  closeOrRejectMdCookieAllow,
   closeOrRejectOneUptimeCookie,
   closeOrRejectPopupBox,
   closeOrRejectSubstackCookie,
@@ -363,6 +365,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'ketch',
     check: checkForKetch,
     rejectOrClose: closeOrRejectKetch,
+    successful: false,
+  },
+  {
+    name: 'md-cookie',
+    check: checkForMdCookieAllow,
+    rejectOrClose: closeOrRejectMdCookieAllow,
     successful: false,
   },
 ];
