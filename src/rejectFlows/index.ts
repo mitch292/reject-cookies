@@ -12,6 +12,19 @@ export const closeOrRejectOneTrust = () => {
     return true;
   }
 
+  const pcRefuseBtn = document.querySelector<HTMLButtonElement>('.ot-pc-refuse-all-handler');
+  if (pcRefuseBtn) {
+    pcRefuseBtn.click();
+    cleanupOneTrustOverlay();
+    return true;
+  }
+
+  const pcBtn = document.getElementById('onetrust-pc-btn-handler');
+  if (pcBtn) {
+    pcBtn.click();
+    return false;
+  }
+
   const saveBtn = document.querySelector<HTMLButtonElement>('.save-preference-btn-handler');
   if (saveBtn) {
     saveBtn.click();
