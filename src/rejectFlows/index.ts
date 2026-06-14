@@ -905,6 +905,77 @@ export const closeOrRejectMdCookieAllow = () => {
   return false;
 };
 
+export const closeOrRejectConsentManager = () => {
+  const box = document.getElementById('cmpbox');
+  if (!box) {
+    return false;
+  }
+
+  const rejectBtn = box.querySelector<HTMLElement>('.cmpboxbtn.cmpboxbtnno');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  box.remove();
+  return true;
+};
+
+export const closeOrRejectOsano = () => {
+  const dialog = document.querySelector<HTMLDivElement>('.osano-cm-dialog');
+  if (!dialog) {
+    return false;
+  }
+
+  const denyBtn = dialog.querySelector<HTMLButtonElement>('.osano-cm-button--type_deny');
+  if (denyBtn) {
+    denyBtn.click();
+    return true;
+  }
+
+  dialog.remove();
+  return true;
+};
+
+export const closeOrRejectRaiderCookie = () => {
+  const wrapper = document.querySelector<HTMLDivElement>('.cookie-footer--wrapper');
+  if (!wrapper) {
+    return false;
+  }
+
+  const rejectBtn = wrapper.querySelector<HTMLButtonElement>('.cookie-footer--reject_button');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  wrapper.remove();
+  return true;
+};
+
+export const closeOrRejectHubspotCookie = () => {
+  const alert = document.getElementById('gdprAlert');
+  if (!alert) {
+    return false;
+  }
+
+  const confirmBtn = document.getElementById('gdprConfirm') as HTMLButtonElement | null;
+  if (confirmBtn) {
+    confirmBtn.click();
+    alert.remove();
+    return true;
+  }
+
+  const manageBtn = document.getElementById('gdprManage') as HTMLButtonElement | null;
+  if (manageBtn) {
+    manageBtn.click();
+    return false;
+  }
+
+  alert.remove();
+  return true;
+};
+
 export const closeOrRejectPornhubCookie = () => {
   // Full cookie banner with reject option
   const fullBanner = document.getElementById('cookieBanner');

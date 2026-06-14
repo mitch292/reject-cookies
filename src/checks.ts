@@ -74,3 +74,9 @@ export const checkForCookieNotice = (): boolean => !!document.getElementById('co
 export const checkForKetch = (): boolean => !!document.getElementById('lanyard_root');
 export const checkForMdCookieAllow = (): boolean =>
   !!document.getElementById('md_cookie_allow-button-save');
+export const checkForConsentManager = (): boolean => !!document.getElementById('cmpbox');
+export const checkForOsano = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.osano-cm-window');
+export const checkForRaiderCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.cookie-footer--wrapper');
+export const checkForHubspotCookie = (): boolean => !!document.getElementById('gdprAlert');
