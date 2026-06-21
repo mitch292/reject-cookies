@@ -25,11 +25,15 @@ export const closeOrRejectOneTrust = () => {
     return false;
   }
 
-  const saveBtn = document.querySelector<HTMLButtonElement>('.save-preference-btn-handler');
-  if (saveBtn) {
-    saveBtn.click();
-    cleanupOneTrustOverlay();
-    return true;
+  const pcSdk = document.getElementById('onetrust-pc-sdk');
+  const pcVisible = pcSdk && !pcSdk.classList.contains('ot-hide');
+  if (pcVisible) {
+    const saveBtn = document.querySelector<HTMLButtonElement>('.save-preference-btn-handler');
+    if (saveBtn) {
+      saveBtn.click();
+      cleanupOneTrustOverlay();
+      return true;
+    }
   }
 
   const consentSDK = document.getElementById('onetrust-consent-sdk');
@@ -303,7 +307,13 @@ export const closeOrRejectQuantcast = () => {
     secondaryBtns.forEach(btn => {
       if (!clicked) {
         const text = btn.textContent?.trim().toUpperCase();
-        if (text === 'DISAGREE' || text === 'REJECT ALL' || text === 'DENY') {
+        if (
+          text === 'DISAGREE' ||
+          text === 'REJECT ALL' ||
+          text === 'DENY' ||
+          text === 'DISCORDO' ||
+          text === 'REJEITAR TUDO'
+        ) {
           btn.click();
           clicked = true;
         }
@@ -311,6 +321,12 @@ export const closeOrRejectQuantcast = () => {
     });
     if (clicked) {
       return true;
+    }
+
+    // Click "More Options" / "Manage" type secondary button to open detailed view
+    if (secondaryBtns.length > 0) {
+      secondaryBtns[0].click();
+      return false;
     }
 
     container.remove();
@@ -939,4 +955,64 @@ export const closeOrRejectPornhubCookie = () => {
   }
 
   return false;
+};
+
+export const closeOrRejectTohoCookie = () => {
+  const modal = document.querySelector<HTMLDivElement>('.js-modalCookie');
+  if (!modal) {
+    return false;
+  }
+
+  const saveBtn = modal.querySelector<HTMLAnchorElement>('.js-modal-save-settings');
+  if (saveBtn) {
+    saveBtn.click();
+    return true;
+  }
+
+  const closeBtn = modal.querySelector<HTMLElement>('.js-modal-close-cookie');
+  if (closeBtn) {
+    closeBtn.click();
+    return true;
+  }
+
+  modal.remove();
+  return true;
+};
+
+export const closeOrRejectSnigelCmp = () => {
+  const root = document.getElementById('fast-cmp-root');
+  if (!root) {
+    return false;
+  }
+
+  const buttons = root.querySelectorAll<HTMLButtonElement>('button');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked) {
+      const text = btn.textContent?.trim().toUpperCase();
+      if (
+        text === 'REJECT ALL' ||
+        text === 'DENY' ||
+        text === 'DISAGREE' ||
+        text === 'REJECT' ||
+        text === 'I DISAGREE'
+      ) {
+        btn.click();
+        clicked = true;
+      }
+    }
+  });
+  if (clicked) {
+    cleanupSnigelCmp();
+    return true;
+  }
+
+  root.remove();
+  cleanupSnigelCmp();
+  return true;
+};
+
+const cleanupSnigelCmp = () => {
+  document.documentElement.removeAttribute('data-fast-cmp-locked');
+  document.body.style.overflow = '';
 };

@@ -74,3 +74,6 @@ export const checkForCookieNotice = (): boolean => !!document.getElementById('co
 export const checkForKetch = (): boolean => !!document.getElementById('lanyard_root');
 export const checkForMdCookieAllow = (): boolean =>
   !!document.getElementById('md_cookie_allow-button-save');
+export const checkForTohoCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.js-modalCookie');
+export const checkForSnigelCmp = (): boolean => !!document.getElementById('fast-cmp-root');
