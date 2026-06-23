@@ -921,6 +921,164 @@ export const closeOrRejectMdCookieAllow = () => {
   return false;
 };
 
+export const closeOrRejectConsentManager = () => {
+  const box = document.getElementById('cmpbox');
+  if (!box) {
+    return false;
+  }
+
+  const rejectBtn = box.querySelector<HTMLElement>('.cmpboxbtn.cmpboxbtnno');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  box.remove();
+  return true;
+};
+
+export const closeOrRejectOsano = () => {
+  const dialog = document.querySelector<HTMLDivElement>('.osano-cm-dialog');
+  if (!dialog) {
+    return false;
+  }
+
+  const denyBtn = dialog.querySelector<HTMLButtonElement>('.osano-cm-button--type_deny');
+  if (denyBtn) {
+    denyBtn.click();
+    return true;
+  }
+
+  dialog.remove();
+  return true;
+};
+
+export const closeOrRejectRaiderCookie = () => {
+  const wrapper = document.querySelector<HTMLDivElement>('.cookie-footer--wrapper');
+  if (!wrapper) {
+    return false;
+  }
+
+  const rejectBtn = wrapper.querySelector<HTMLButtonElement>('.cookie-footer--reject_button');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  wrapper.remove();
+  return true;
+};
+
+export const closeOrRejectHubspotCookie = () => {
+  const alert = document.getElementById('gdprAlert');
+  if (!alert) {
+    return false;
+  }
+
+  const confirmBtn = document.getElementById('gdprConfirm') as HTMLButtonElement | null;
+  if (confirmBtn) {
+    confirmBtn.click();
+    alert.remove();
+    return true;
+  }
+
+  const manageBtn = document.getElementById('gdprManage') as HTMLButtonElement | null;
+  if (manageBtn) {
+    manageBtn.click();
+    return false;
+  }
+
+  alert.remove();
+  return true;
+};
+
+export const closeOrRejectMooveGDPR = () => {
+  const banner = document.getElementById('moove_gdpr_cookie_info_bar');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('.moove-gdpr-infobar-reject-btn');
+  if (rejectBtn) {
+    rejectBtn.click();
+    document.body.classList.remove('gdpr-infobar-visible');
+    return true;
+  }
+
+  banner.remove();
+  document.body.classList.remove('gdpr-infobar-visible');
+  return true;
+};
+
+export const closeOrRejectCookieHub = () => {
+  const container = document.querySelector<HTMLDivElement>('.ch2-container');
+  if (!container) {
+    return false;
+  }
+
+  const denyBtn = container.querySelector<HTMLButtonElement>('.ch2-deny-all-btn');
+  if (denyBtn) {
+    denyBtn.click();
+    return true;
+  }
+
+  container.remove();
+  return true;
+};
+
+export const closeOrRejectHubSpotCookie = () => {
+  const banner = document.getElementById('hs-eu-cookie-confirmation');
+  if (!banner) {
+    return false;
+  }
+
+  const declineBtn = document.getElementById('hs-eu-decline-button');
+  if (declineBtn) {
+    declineBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectConsentPro = () => {
+  const banner = document.querySelector<HTMLDivElement>(
+    '[fs-consent-element="banner"][fs-consent-active]'
+  );
+  if (!banner) {
+    return false;
+  }
+
+  const denyBtn = banner.querySelector<HTMLButtonElement>(
+    '[fs-consent-element="deny"], [data-consent="deny"]'
+  );
+  if (denyBtn) {
+    denyBtn.click();
+    return true;
+  }
+
+  banner.removeAttribute('fs-consent-active');
+  banner.style.display = 'none';
+  return true;
+};
+
+export const closeOrRejectXHCookiesAnnounce = () => {
+  const banner = document.querySelector<HTMLDivElement>('[class*="cookiesAnnounce"]');
+  if (!banner) {
+    return false;
+  }
+
+  const okBtn = banner.querySelector<HTMLButtonElement>('button');
+  if (okBtn) {
+    okBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
 export const closeOrRejectPornhubCookie = () => {
   // Full cookie banner with reject option
   const fullBanner = document.getElementById('cookieBanner');

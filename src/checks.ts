@@ -77,3 +77,19 @@ export const checkForMdCookieAllow = (): boolean =>
 export const checkForTohoCookie = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.js-modalCookie');
 export const checkForSnigelCmp = (): boolean => !!document.getElementById('fast-cmp-root');
+export const checkForConsentManager = (): boolean => !!document.getElementById('cmpbox');
+export const checkForOsano = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.osano-cm-window');
+export const checkForRaiderCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.cookie-footer--wrapper');
+export const checkForHubspotCookie = (): boolean => !!document.getElementById('gdprAlert');
+export const checkForMooveGDPR = (): boolean =>
+  !!document.getElementById('moove_gdpr_cookie_info_bar');
+export const checkForCookieHub = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.ch2-container');
+export const checkForHubSpotCookie = (): boolean =>
+  !!document.getElementById('hs-eu-cookie-confirmation');
+export const checkForConsentPro = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[fs-consent-element="banner"][fs-consent-active]');
+export const checkForXHCookiesAnnounce = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[class*="cookiesAnnounce"]');
