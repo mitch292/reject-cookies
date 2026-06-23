@@ -54,6 +54,8 @@ import {
   checkForCookieBar,
   checkForUniConsent,
   checkForMdCookieAllow,
+  checkForTohoCookie,
+  checkForSnigelCmp,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -92,6 +94,8 @@ import {
   closeOrRejectConsentManager,
   closeOrRejectHubspotCookie,
   closeOrRejectMdCookieAllow,
+  closeOrRejectTohoCookie,
+  closeOrRejectSnigelCmp,
   closeOrRejectMooveGDPR,
   closeOrRejectOneUptimeCookie,
   closeOrRejectOsano,
@@ -389,6 +393,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'md-cookie',
     check: checkForMdCookieAllow,
     rejectOrClose: closeOrRejectMdCookieAllow,
+    successful: false,
+  },
+  {
+    name: 'toho-cookie',
+    check: checkForTohoCookie,
+    rejectOrClose: closeOrRejectTohoCookie,
+    successful: false,
+  },
+  {
+    name: 'snigel-cmp',
+    check: checkForSnigelCmp,
+    rejectOrClose: closeOrRejectSnigelCmp,
     successful: false,
   },
   {
