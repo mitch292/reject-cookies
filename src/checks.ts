@@ -74,3 +74,13 @@ export const checkForCookieNotice = (): boolean => !!document.getElementById('co
 export const checkForKetch = (): boolean => !!document.getElementById('lanyard_root');
 export const checkForMdCookieAllow = (): boolean =>
   !!document.getElementById('md_cookie_allow-button-save');
+export const checkForMooveGDPR = (): boolean =>
+  !!document.getElementById('moove_gdpr_cookie_info_bar');
+export const checkForCookieHub = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.ch2-container');
+export const checkForHubSpotCookie = (): boolean =>
+  !!document.getElementById('hs-eu-cookie-confirmation');
+export const checkForConsentPro = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[fs-consent-element="banner"][fs-consent-active]');
+export const checkForXHCookiesAnnounce = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[class*="cookiesAnnounce"]');
