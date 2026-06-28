@@ -923,17 +923,47 @@ export const closeOrRejectMdCookieAllow = () => {
 
 export const closeOrRejectConsentManager = () => {
   const box = document.getElementById('cmpbox');
-  if (!box) {
-    return false;
-  }
-
-  const rejectBtn = box.querySelector<HTMLElement>('.cmpboxbtn.cmpboxbtnno');
-  if (rejectBtn) {
-    rejectBtn.click();
+  if (box) {
+    const rejectBtn = box.querySelector<HTMLElement>('.cmpboxbtn.cmpboxbtnno');
+    if (rejectBtn) {
+      rejectBtn.click();
+      return true;
+    }
+    box.remove();
     return true;
   }
 
-  box.remove();
+  const wrapper = document.getElementById('cmpwrapper');
+  if (wrapper) {
+    wrapper.remove();
+    return true;
+  }
+
+  return false;
+};
+
+export const closeOrRejectRelyance = () => {
+  const banner = document.getElementById('relyance-banner-container');
+  if (!banner) {
+    return false;
+  }
+
+  const buttons = banner.querySelectorAll<HTMLElement>('[role="button"]');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked) {
+      const label = btn.getAttribute('aria-label') || '';
+      if (label.toLowerCase().includes('reject')) {
+        btn.click();
+        clicked = true;
+      }
+    }
+  });
+  if (clicked) {
+    return true;
+  }
+
+  banner.remove();
   return true;
 };
 
