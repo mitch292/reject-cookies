@@ -77,7 +77,10 @@ export const checkForMdCookieAllow = (): boolean =>
 export const checkForTohoCookie = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.js-modalCookie');
 export const checkForSnigelCmp = (): boolean => !!document.getElementById('fast-cmp-root');
-export const checkForConsentManager = (): boolean => !!document.getElementById('cmpbox');
+export const checkForConsentManager = (): boolean =>
+  !!document.getElementById('cmpbox') || !!document.getElementById('cmpwrapper');
+export const checkForRelyance = (): boolean =>
+  !!document.getElementById('relyance-banner-container');
 export const checkForOsano = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.osano-cm-window');
 export const checkForRaiderCookie = (): boolean =>

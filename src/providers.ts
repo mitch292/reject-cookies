@@ -6,6 +6,7 @@ import {
   checkForCC,
   checkForCmplz,
   checkForConsentManager,
+  checkForRelyance,
   checkForConsentPro,
   checkForCookieBot,
   checkForCookieConsent,
@@ -92,6 +93,7 @@ import {
   closeOrRejectHubSpotCookie,
   closeOrRejectKetch,
   closeOrRejectConsentManager,
+  closeOrRejectRelyance,
   closeOrRejectHubspotCookie,
   closeOrRejectMdCookieAllow,
   closeOrRejectTohoCookie,
@@ -411,6 +413,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'consentmanager',
     check: checkForConsentManager,
     rejectOrClose: closeOrRejectConsentManager,
+    successful: false,
+  },
+  {
+    name: 'relyance',
+    check: checkForRelyance,
+    rejectOrClose: closeOrRejectRelyance,
     successful: false,
   },
   {
