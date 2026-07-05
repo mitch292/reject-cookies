@@ -57,6 +57,7 @@ import {
   checkForMdCookieAllow,
   checkForTohoCookie,
   checkForSnigelCmp,
+  checkForShopifyPrivacy,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -107,6 +108,7 @@ import {
   closeOrRejectUniConsent,
   closeOrRejectWebToffee,
   closeOrRejectWorkableCookie,
+  closeOrRejectShopifyPrivacy,
   closeOrRejectXHCookiesAnnounce,
   closeOrRejectXHCookiesModal,
   closeSourcepoint,
@@ -467,6 +469,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'xh-cookies-announce',
     check: checkForXHCookiesAnnounce,
     rejectOrClose: closeOrRejectXHCookiesAnnounce,
+    successful: false,
+  },
+  {
+    name: 'shopify-privacy',
+    check: checkForShopifyPrivacy,
+    rejectOrClose: closeOrRejectShopifyPrivacy,
     successful: false,
   },
 ];

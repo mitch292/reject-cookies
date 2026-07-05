@@ -96,3 +96,5 @@ export const checkForConsentPro = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[fs-consent-element="banner"][fs-consent-active]');
 export const checkForXHCookiesAnnounce = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[class*="cookiesAnnounce"]');
+export const checkForShopifyPrivacy = (): boolean =>
+  !!document.getElementById('shopify-pc__banner');

@@ -1109,6 +1109,52 @@ export const closeOrRejectXHCookiesAnnounce = () => {
   return true;
 };
 
+export const closeOrRejectShopifyPrivacy = () => {
+  const banner = document.getElementById('shopify-pc__banner');
+  if (!banner) {
+    return false;
+  }
+
+  const declineBtn = document.getElementById(
+    'shopify-pc__banner__btn-decline'
+  ) as HTMLButtonElement | null;
+  if (declineBtn) {
+    declineBtn.click();
+    cleanupShopifyPrivacy();
+    return true;
+  }
+
+  const prefsDeclineBtn = document.getElementById(
+    'shopify-pc__prefs__header-decline'
+  ) as HTMLButtonElement | null;
+  if (prefsDeclineBtn) {
+    prefsDeclineBtn.click();
+    cleanupShopifyPrivacy();
+    return true;
+  }
+
+  const wrapper = document.querySelector<HTMLDivElement>('.shopify-pc__banner__wrapper');
+  if (wrapper) {
+    wrapper.remove();
+  } else {
+    banner.remove();
+  }
+  cleanupShopifyPrivacy();
+  return true;
+};
+
+const cleanupShopifyPrivacy = () => {
+  const prefs = document.getElementById('shopify-pc__prefs');
+  if (prefs) {
+    prefs.remove();
+  }
+  const overlay = document.querySelector<HTMLDivElement>('.shopify-pc__prefs__overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.style.overflow = '';
+};
+
 export const closeOrRejectPornhubCookie = () => {
   // Full cookie banner with reject option
   const fullBanner = document.getElementById('cookieBanner');
