@@ -927,19 +927,38 @@ export const closeOrRejectConsentManager = () => {
     const rejectBtn = box.querySelector<HTMLElement>('.cmpboxbtn.cmpboxbtnno');
     if (rejectBtn) {
       rejectBtn.click();
+      cleanupConsentManager();
       return true;
     }
+
+    const saveBtn = box.querySelector<HTMLElement>('.cmpboxbtn.cmpboxbtnsave');
+    if (saveBtn) {
+      saveBtn.click();
+      cleanupConsentManager();
+      return true;
+    }
+
     box.remove();
+    cleanupConsentManager();
     return true;
   }
 
   const wrapper = document.getElementById('cmpwrapper');
   if (wrapper) {
     wrapper.remove();
+    cleanupConsentManager();
     return true;
   }
 
   return false;
+};
+
+const cleanupConsentManager = () => {
+  const bg = document.querySelector<HTMLDivElement>('.cmpboxBG');
+  if (bg) {
+    bg.remove();
+  }
+  document.body.style.overflow = '';
 };
 
 export const closeOrRejectRelyance = () => {
@@ -1249,4 +1268,45 @@ export const closeOrRejectSnigelCmp = () => {
 const cleanupSnigelCmp = () => {
   document.documentElement.removeAttribute('data-fast-cmp-locked');
   document.body.style.overflow = '';
+};
+
+export const closeOrRejectAmazonCookie = () => {
+  const wrapper = document.getElementById('sp-cc-wrapper');
+  if (!wrapper) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('sp-cc-rejectall-link') as HTMLInputElement | null;
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  wrapper.remove();
+  return true;
+};
+
+export const closeOrRejectMudBlazorCC = () => {
+  const container = document.querySelector<HTMLDivElement>('.mud-cc-container');
+  if (!container) {
+    return false;
+  }
+
+  const buttons = container.querySelectorAll<HTMLButtonElement>('.mud-cc-actions button');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked) {
+      const text = btn.textContent?.trim().toLowerCase();
+      if (text === 'close' || text === 'decline' || text === 'reject') {
+        btn.click();
+        clicked = true;
+      }
+    }
+  });
+  if (clicked) {
+    return true;
+  }
+
+  container.remove();
+  return true;
 };
