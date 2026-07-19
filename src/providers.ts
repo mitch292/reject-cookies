@@ -60,6 +60,8 @@ import {
   checkForShopifyPrivacy,
   checkForMicrosoftWCP,
   checkForMediaFireCookie,
+  checkForAmazonCookie,
+  checkForMudBlazorCC,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -111,6 +113,8 @@ import {
   closeOrRejectWebToffee,
   closeOrRejectWorkableCookie,
   closeOrRejectShopifyPrivacy,
+  closeOrRejectAmazonCookie,
+  closeOrRejectMudBlazorCC,
   closeOrRejectXHCookiesAnnounce,
   closeOrRejectXHCookiesModal,
   closeSourcepoint,
@@ -491,6 +495,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'mediafire-cookie',
     check: checkForMediaFireCookie,
     rejectOrClose: closeOrRejectMediaFireCookie,
+    successful: false,
+  },
+  {
+    name: 'amazon-cookie',
+    check: checkForAmazonCookie,
+    rejectOrClose: closeOrRejectAmazonCookie,
+    successful: false,
+  },
+  {
+    name: 'mudblazor-cc',
+    check: checkForMudBlazorCC,
+    rejectOrClose: closeOrRejectMudBlazorCC,
     successful: false,
   },
 ];

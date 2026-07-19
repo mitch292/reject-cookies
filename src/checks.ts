@@ -102,3 +102,6 @@ export const checkForMicrosoftWCP = (): boolean =>
   !!document.getElementById('wcpConsentBannerCtrl');
 export const checkForMediaFireCookie = (): boolean =>
   !!document.getElementById('cookie-accept-footer');
+export const checkForAmazonCookie = (): boolean => !!document.getElementById('sp-cc-wrapper');
+export const checkForMudBlazorCC = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.mud-cc-container');
