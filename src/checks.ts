@@ -98,3 +98,6 @@ export const checkForXHCookiesAnnounce = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[class*="cookiesAnnounce"]');
 export const checkForShopifyPrivacy = (): boolean =>
   !!document.getElementById('shopify-pc__banner');
+export const checkForAmazonCookie = (): boolean => !!document.getElementById('sp-cc-wrapper');
+export const checkForMudBlazorCC = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.mud-cc-container');

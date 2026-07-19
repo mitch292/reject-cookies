@@ -58,6 +58,8 @@ import {
   checkForTohoCookie,
   checkForSnigelCmp,
   checkForShopifyPrivacy,
+  checkForAmazonCookie,
+  checkForMudBlazorCC,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -109,6 +111,8 @@ import {
   closeOrRejectWebToffee,
   closeOrRejectWorkableCookie,
   closeOrRejectShopifyPrivacy,
+  closeOrRejectAmazonCookie,
+  closeOrRejectMudBlazorCC,
   closeOrRejectXHCookiesAnnounce,
   closeOrRejectXHCookiesModal,
   closeSourcepoint,
@@ -475,6 +479,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'shopify-privacy',
     check: checkForShopifyPrivacy,
     rejectOrClose: closeOrRejectShopifyPrivacy,
+    successful: false,
+  },
+  {
+    name: 'amazon-cookie',
+    check: checkForAmazonCookie,
+    rejectOrClose: closeOrRejectAmazonCookie,
+    successful: false,
+  },
+  {
+    name: 'mudblazor-cc',
+    check: checkForMudBlazorCC,
+    rejectOrClose: closeOrRejectMudBlazorCC,
     successful: false,
   },
 ];
