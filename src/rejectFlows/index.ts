@@ -19,12 +19,6 @@ export const closeOrRejectOneTrust = () => {
     return true;
   }
 
-  const pcBtn = document.getElementById('onetrust-pc-btn-handler');
-  if (pcBtn) {
-    pcBtn.click();
-    return false;
-  }
-
   const pcSdk = document.getElementById('onetrust-pc-sdk');
   const pcVisible = pcSdk && !pcSdk.classList.contains('ot-hide');
   if (pcVisible) {
@@ -34,6 +28,12 @@ export const closeOrRejectOneTrust = () => {
       cleanupOneTrustOverlay();
       return true;
     }
+  }
+
+  const pcBtn = document.getElementById('onetrust-pc-btn-handler');
+  if (pcBtn) {
+    pcBtn.click();
+    return false;
   }
 
   const consentSDK = document.getElementById('onetrust-consent-sdk');
@@ -775,9 +775,15 @@ export const closeOrRejectEzoic = () => {
   }
 
   const rejectBtn = document.getElementById('ez-reject-all') as HTMLButtonElement | null;
-  if (rejectBtn) {
+  if (rejectBtn && rejectBtn.style.display !== 'none') {
     rejectBtn.click();
     return true;
+  }
+
+  const manageBtn = document.getElementById('ez-manage-settings') as HTMLButtonElement | null;
+  if (manageBtn) {
+    manageBtn.click();
+    return false;
   }
 
   const container = document.getElementById('ez-cmpv2-container');
@@ -1140,6 +1146,47 @@ export const closeOrRejectShopifyPrivacy = () => {
     banner.remove();
   }
   cleanupShopifyPrivacy();
+  return true;
+};
+
+export const closeOrRejectMicrosoftWCP = () => {
+  const banner = document.getElementById('wcpConsentBannerCtrl');
+  if (!banner) {
+    return false;
+  }
+
+  const buttons = banner.querySelectorAll<HTMLButtonElement>('button');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked) {
+      const text = btn.textContent?.trim().toLowerCase();
+      if (text === 'reject') {
+        btn.click();
+        clicked = true;
+      }
+    }
+  });
+  if (clicked) {
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectMediaFireCookie = () => {
+  const banner = document.getElementById('cookie-accept-footer');
+  if (!banner) {
+    return false;
+  }
+
+  const closeBtn = banner.querySelector<HTMLAnchorElement>('.CookieAcceptance-close');
+  if (closeBtn) {
+    closeBtn.click();
+    return true;
+  }
+
+  banner.remove();
   return true;
 };
 

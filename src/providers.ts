@@ -58,6 +58,8 @@ import {
   checkForTohoCookie,
   checkForSnigelCmp,
   checkForShopifyPrivacy,
+  checkForMicrosoftWCP,
+  checkForMediaFireCookie,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -119,6 +121,8 @@ import {
   rejectOrCloseUCGDPR,
   rejectTermly,
   rejectUserCentrics,
+  closeOrRejectMicrosoftWCP,
+  closeOrRejectMediaFireCookie,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -475,6 +479,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'shopify-privacy',
     check: checkForShopifyPrivacy,
     rejectOrClose: closeOrRejectShopifyPrivacy,
+    successful: false,
+  },
+  {
+    name: 'microsoft-wcp',
+    check: checkForMicrosoftWCP,
+    rejectOrClose: closeOrRejectMicrosoftWCP,
+    successful: false,
+  },
+  {
+    name: 'mediafire-cookie',
+    check: checkForMediaFireCookie,
+    rejectOrClose: closeOrRejectMediaFireCookie,
     successful: false,
   },
 ];

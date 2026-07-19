@@ -98,3 +98,7 @@ export const checkForXHCookiesAnnounce = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[class*="cookiesAnnounce"]');
 export const checkForShopifyPrivacy = (): boolean =>
   !!document.getElementById('shopify-pc__banner');
+export const checkForMicrosoftWCP = (): boolean =>
+  !!document.getElementById('wcpConsentBannerCtrl');
+export const checkForMediaFireCookie = (): boolean =>
+  !!document.getElementById('cookie-accept-footer');
