@@ -62,6 +62,7 @@ import {
   checkForMediaFireCookie,
   checkForAmazonCookie,
   checkForMudBlazorCC,
+  checkForPandectes,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -128,6 +129,7 @@ import {
   closeOrRejectMicrosoftWCP,
   closeOrRejectMediaFireCookie,
 } from './rejectFlows';
+import { rejectPandectes } from './rejectFlows/pandectes';
 import { CookiePopupCheck } from './types';
 
 export const commonCookiePopupChecks: CookiePopupCheck[] = [
@@ -507,6 +509,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'mudblazor-cc',
     check: checkForMudBlazorCC,
     rejectOrClose: closeOrRejectMudBlazorCC,
+    successful: false,
+  },
+  {
+    name: 'pandectes',
+    check: checkForPandectes,
+    rejectOrClose: rejectPandectes,
     successful: false,
   },
 ];

@@ -105,3 +105,5 @@ export const checkForMediaFireCookie = (): boolean =>
 export const checkForAmazonCookie = (): boolean => !!document.getElementById('sp-cc-wrapper');
 export const checkForMudBlazorCC = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.mud-cc-container');
+export const checkForPandectes = (): boolean =>
+  !!document.querySelector<HTMLElement>('pandectes-cmp');
