@@ -66,10 +66,6 @@ export const closeTranscend = () => {
 };
 
 export const rejectCookieBot = () => {
-  const popUp = document.getElementById('CybotCookiebotDialog');
-  if (!popUp) {
-    return false;
-  }
   const rejectButton = document.getElementById('CybotCookiebotDialogBodyButtonDecline');
   if (rejectButton) {
     if (rejectButton.classList.contains('CybotCookiebotDialogHide')) {
@@ -82,6 +78,8 @@ export const rejectCookieBot = () => {
     rejectButton.click();
     return true;
   }
+
+  const popUp = document.getElementById('CybotCookiebotDialog');
 
   // DR.dk uses a custom CookieBot wrapper with its own buttons
   const drOverlay = document.getElementById('drcc-overlay');
@@ -96,6 +94,9 @@ export const rejectCookieBot = () => {
     }
   }
 
+  if (popUp) {
+    return false;
+  }
   return false;
 };
 
@@ -1355,5 +1356,138 @@ export const closeOrRejectMudBlazorCC = () => {
   }
 
   container.remove();
+  return true;
+};
+
+export const closeOrRejectGetAdBlockCookie = () => {
+  const banner = document.getElementById('cookie_notification_banner');
+  if (!banner) {
+    return false;
+  }
+
+  const saveBtn = document.getElementById('save-preferences') as HTMLButtonElement | null;
+  if (saveBtn) {
+    saveBtn.click();
+    return true;
+  }
+
+  const settingsBtn = document.getElementById('cookie-settings') as HTMLButtonElement | null;
+  if (settingsBtn) {
+    settingsBtn.click();
+    return false;
+  }
+
+  const cookieBanner = document.getElementById('cookie-banner');
+  if (cookieBanner) {
+    cookieBanner.remove();
+  } else {
+    banner.remove();
+  }
+  return true;
+};
+
+export const closeOrRejectSnapcraftCookie = () => {
+  const modal = document.querySelector<HTMLDivElement>('.cookie-notification-modal');
+  if (!modal) {
+    return false;
+  }
+
+  const closeBtn = modal.querySelector<HTMLButtonElement>('.p-modal__close');
+  if (closeBtn) {
+    closeBtn.click();
+    return true;
+  }
+
+  modal.remove();
+  return true;
+};
+
+export const closeOrRejectCCConsentBanner = () => {
+  const banner = document.getElementById('cc-consent-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('cc-reject-all') as HTMLButtonElement | null;
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectSilktide = () => {
+  const banner = document.getElementById('silktide-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('button.reject-all');
+  if (rejectBtn) {
+    rejectBtn.click();
+    cleanupSilktide();
+    return true;
+  }
+
+  banner.remove();
+  cleanupSilktide();
+  return true;
+};
+
+const cleanupSilktide = () => {
+  const backdrop = document.getElementById('silktide-backdrop');
+  if (backdrop) {
+    backdrop.remove();
+  }
+  const wrapper = document.getElementById('silktide-wrapper');
+  if (wrapper) {
+    wrapper.remove();
+  }
+  document.body.style.overflow = '';
+};
+
+export const closeOrRejectCookieFirst = () => {
+  const root = document.getElementById('cookiefirst-root');
+  if (!root) {
+    return false;
+  }
+
+  const rejectBtn = root.querySelector<HTMLButtonElement>('[data-cookiefirst-action="reject"]');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  root.remove();
+  return true;
+};
+
+export const closeOrRejectEUCookieCompliance = () => {
+  const popup = document.getElementById('sliding-popup');
+  if (!popup) {
+    return false;
+  }
+
+  const minimalBtn = popup.querySelector<HTMLElement>(
+    '.eu-cookie-compliance-rocketship--accept-minimal'
+  );
+  if (minimalBtn) {
+    minimalBtn.click();
+    return true;
+  }
+
+  const saveBtn = popup.querySelector<HTMLButtonElement>(
+    '.eu-cookie-compliance-save-preferences-button'
+  );
+  if (saveBtn) {
+    saveBtn.click();
+    return true;
+  }
+
+  popup.remove();
+  document.body.classList.remove('eu-cookie-compliance-popup-open');
+  document.body.style.overflow = '';
   return true;
 };

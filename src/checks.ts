@@ -1,7 +1,9 @@
 export const checkForOneTrust = (): boolean => !!document.getElementById('onetrust-consent-sdk');
 export const checkForTranscend = (): boolean =>
   !!document.getElementById('transcend-consent-manager');
-export const checkForCookieBot = (): boolean => !!document.getElementById('CybotCookiebotDialog');
+export const checkForCookieBot = (): boolean =>
+  !!document.getElementById('CybotCookiebotDialog') ||
+  !!document.getElementById('CybotCookiebotDialogBodyButtonDecline');
 export const checkForUserCentrics = (): boolean =>
   !!document.getElementById('usercentrics-root') ||
   !!document.getElementById('usercentrics-cmp-ui');
@@ -105,3 +107,12 @@ export const checkForMediaFireCookie = (): boolean =>
 export const checkForAmazonCookie = (): boolean => !!document.getElementById('sp-cc-wrapper');
 export const checkForMudBlazorCC = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.mud-cc-container');
+export const checkForGetAdBlockCookie = (): boolean =>
+  !!document.getElementById('cookie_notification_banner');
+export const checkForSnapcraftCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.cookie-notification-modal');
+export const checkForCCConsentBanner = (): boolean =>
+  !!document.getElementById('cc-consent-banner');
+export const checkForSilktide = (): boolean => !!document.getElementById('silktide-banner');
+export const checkForCookieFirst = (): boolean => !!document.getElementById('cookiefirst-root');
+export const checkForEUCookieCompliance = (): boolean => !!document.getElementById('sliding-popup');
