@@ -79,6 +79,14 @@ export const rejectCookieBot = () => {
     return true;
   }
 
+  const declineAllBtn = document.getElementById(
+    'CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll'
+  );
+  if (declineAllBtn) {
+    declineAllBtn.click();
+    return true;
+  }
+
   const popUp = document.getElementById('CybotCookiebotDialog');
 
   // DR.dk uses a custom CookieBot wrapper with its own buttons
@@ -1005,6 +1013,18 @@ export const closeOrRejectOsano = () => {
     return true;
   }
 
+  const denyAllBtn = dialog.querySelector<HTMLButtonElement>('.osano-cm-button--type_denyAll');
+  if (denyAllBtn) {
+    denyAllBtn.click();
+    return true;
+  }
+
+  const closeBtn = dialog.querySelector<HTMLButtonElement>('.osano-cm-close');
+  if (closeBtn) {
+    closeBtn.click();
+    return true;
+  }
+
   dialog.remove();
   return true;
 };
@@ -1489,5 +1509,66 @@ export const closeOrRejectEUCookieCompliance = () => {
   popup.remove();
   document.body.classList.remove('eu-cookie-compliance-popup-open');
   document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectAuctionetCookie = () => {
+  const form = document.querySelector<HTMLFormElement>('[data-controller="cookie-consent"]');
+  if (!form) {
+    return false;
+  }
+
+  const rejectBtn = form.querySelector<HTMLButtonElement>(
+    '[data-action="cookie-consent#rejectAll"]'
+  );
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  form.remove();
+  return true;
+};
+
+export const closeOrRejectOnetCmp = () => {
+  const popup = document.querySelector<HTMLDivElement>('.cmp-popup_popup');
+  if (!popup) {
+    return false;
+  }
+
+  const rejectBtn = popup.querySelector<HTMLButtonElement>('.cmp-intro_rejectAll');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  popup.remove();
+  const overlay = document.querySelector<HTMLDivElement>('.cmp-popup_overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectPrawoJazdyCookie = () => {
+  const container = document.getElementById('cookies-message-container');
+  if (!container) {
+    return false;
+  }
+
+  const buttons = container.querySelectorAll<HTMLAnchorElement>('a.btn');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked && btn.classList.contains('light')) {
+      btn.click();
+      clicked = true;
+    }
+  });
+  if (clicked) {
+    return true;
+  }
+
+  container.remove();
   return true;
 };

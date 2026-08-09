@@ -3,7 +3,8 @@ export const checkForTranscend = (): boolean =>
   !!document.getElementById('transcend-consent-manager');
 export const checkForCookieBot = (): boolean =>
   !!document.getElementById('CybotCookiebotDialog') ||
-  !!document.getElementById('CybotCookiebotDialogBodyButtonDecline');
+  !!document.getElementById('CybotCookiebotDialogBodyButtonDecline') ||
+  !!document.getElementById('CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll');
 export const checkForUserCentrics = (): boolean =>
   !!document.getElementById('usercentrics-root') ||
   !!document.getElementById('usercentrics-cmp-ui');
@@ -116,3 +117,9 @@ export const checkForCCConsentBanner = (): boolean =>
 export const checkForSilktide = (): boolean => !!document.getElementById('silktide-banner');
 export const checkForCookieFirst = (): boolean => !!document.getElementById('cookiefirst-root');
 export const checkForEUCookieCompliance = (): boolean => !!document.getElementById('sliding-popup');
+export const checkForAuctionetCookie = (): boolean =>
+  !!document.querySelector<HTMLFormElement>('[data-controller="cookie-consent"]');
+export const checkForOnetCmp = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.cmp-popup_popup');
+export const checkForPrawoJazdyCookie = (): boolean =>
+  !!document.getElementById('cookies-message-container');

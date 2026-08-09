@@ -68,6 +68,9 @@ import {
   checkForMediaFireCookie,
   checkForAmazonCookie,
   checkForMudBlazorCC,
+  checkForAuctionetCookie,
+  checkForOnetCmp,
+  checkForPrawoJazdyCookie,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -139,6 +142,9 @@ import {
   rejectUserCentrics,
   closeOrRejectMicrosoftWCP,
   closeOrRejectMediaFireCookie,
+  closeOrRejectAuctionetCookie,
+  closeOrRejectOnetCmp,
+  closeOrRejectPrawoJazdyCookie,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -555,6 +561,24 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'eu-cookie-compliance',
     check: checkForEUCookieCompliance,
     rejectOrClose: closeOrRejectEUCookieCompliance,
+    successful: false,
+  },
+  {
+    name: 'auctionet-cookie',
+    check: checkForAuctionetCookie,
+    rejectOrClose: closeOrRejectAuctionetCookie,
+    successful: false,
+  },
+  {
+    name: 'onet-cmp',
+    check: checkForOnetCmp,
+    rejectOrClose: closeOrRejectOnetCmp,
+    successful: false,
+  },
+  {
+    name: 'prawo-jazdy-cookie',
+    check: checkForPrawoJazdyCookie,
+    rejectOrClose: closeOrRejectPrawoJazdyCookie,
     successful: false,
   },
 ];
