@@ -116,3 +116,9 @@ export const checkForCCConsentBanner = (): boolean =>
 export const checkForSilktide = (): boolean => !!document.getElementById('silktide-banner');
 export const checkForCookieFirst = (): boolean => !!document.getElementById('cookiefirst-root');
 export const checkForEUCookieCompliance = (): boolean => !!document.getElementById('sliding-popup');
+export const checkForABConsent = (): boolean => !!document.getElementById('__abconsent-cmp');
+export const checkForBoschConsent = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.bosch-consent-container');
+export const checkForWPPrivacy = (): boolean =>
+  !!document.body?.hasAttribute('data-bd-content') &&
+  !!document.querySelector<HTMLDivElement>('[role="dialog"][aria-modal="true"]');
