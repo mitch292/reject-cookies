@@ -313,7 +313,13 @@ export const closeOrRejectQuantcast = () => {
           text === 'REJECT ALL' ||
           text === 'DENY' ||
           text === 'DISCORDO' ||
-          text === 'REJEITAR TUDO'
+          text === 'REJEITAR TUDO' ||
+          text === 'NEM EGYEZEK BELE' ||
+          text === 'MINDENT ELUTASÍT' ||
+          text === 'ELUTASÍTOM' ||
+          text === 'TOUT REFUSER' ||
+          text === 'ALLE ABLEHNEN' ||
+          text === 'RECHAZAR TODO'
         ) {
           btn.click();
           clicked = true;
@@ -1461,6 +1467,95 @@ export const closeOrRejectCookieFirst = () => {
   }
 
   root.remove();
+  return true;
+};
+
+export const closeOrRejectABConsent = () => {
+  const root = document.getElementById('__abconsent-cmp');
+  if (!root) {
+    return false;
+  }
+
+  const buttons = root.querySelectorAll<HTMLButtonElement>('button');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked) {
+      const text = btn.textContent?.trim().toLowerCase();
+      if (
+        text === 'nie akceptuj' ||
+        text === 'reject all' ||
+        text === 'refuse all' ||
+        text === 'tout refuser' ||
+        text === 'reject' ||
+        text === 'refuse'
+      ) {
+        btn.click();
+        clicked = true;
+      }
+    }
+  });
+  if (clicked) {
+    root.remove();
+    document.body.classList.remove('sd-cmp-VUPE8');
+    document.body.style.overflow = '';
+    return true;
+  }
+
+  root.remove();
+  document.body.classList.remove('sd-cmp-VUPE8');
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectBoschConsent = () => {
+  const container = document.querySelector<HTMLDivElement>('.bosch-consent-container');
+  if (!container) {
+    return false;
+  }
+
+  const saveBtn = document.getElementById('consentSave') as HTMLButtonElement | null;
+  if (saveBtn) {
+    saveBtn.click();
+    cleanupBoschConsent();
+    return true;
+  }
+
+  container.remove();
+  cleanupBoschConsent();
+  return true;
+};
+
+const cleanupBoschConsent = () => {
+  const overlay = document.querySelector<HTMLDivElement>('.bosch-consent-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.style.overflow = '';
+};
+
+export const closeOrRejectWPPrivacy = () => {
+  const dialog = document.querySelector<HTMLDivElement>('[role="dialog"][aria-modal="true"]');
+  if (!dialog) {
+    return false;
+  }
+
+  const buttons = dialog.querySelectorAll<HTMLButtonElement>('button');
+  let clicked = false;
+  buttons.forEach(btn => {
+    if (!clicked) {
+      const text = btn.textContent?.trim().toLowerCase();
+      if (text?.startsWith('odrzucam')) {
+        btn.click();
+        clicked = true;
+      }
+    }
+  });
+  if (clicked) {
+    return true;
+  }
+
+  dialog.remove();
+  document.body.style.overflow = '';
   return true;
 };
 
