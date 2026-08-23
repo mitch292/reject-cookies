@@ -122,3 +122,9 @@ export const checkForBoschConsent = (): boolean =>
 export const checkForWPPrivacy = (): boolean =>
   !!document.body?.hasAttribute('data-bd-content') &&
   !!document.querySelector<HTMLDivElement>('[role="dialog"][aria-modal="true"]');
+export const checkForSuccessFactors = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.cookiePolicy.cookiemanager') ||
+  !!document.getElementById('cookieManagerModal');
+export const checkForPandectes = (): boolean => !!document.getElementById('pandectes-banner');
+export const checkForR42 = (): boolean => !!document.getElementById('r42CookieBar');
+export const checkForGravito = (): boolean => !!document.getElementById('gravitoCMPRoot');
