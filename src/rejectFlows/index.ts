@@ -1636,3 +1636,105 @@ export const closeOrRejectEUCookieCompliance = () => {
   document.body.style.overflow = '';
   return true;
 };
+
+export const closeOrRejectSuccessFactors = () => {
+  const rejectBtn = document.getElementById('cookie-reject') as HTMLButtonElement | null;
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  const modalRejectBtn = document.getElementById(
+    'cookiemanagerrejectall'
+  ) as HTMLButtonElement | null;
+  if (modalRejectBtn) {
+    modalRejectBtn.click();
+    return true;
+  }
+
+  const banner = document.querySelector<HTMLDivElement>('.cookiePolicy.cookiemanager');
+  if (banner) {
+    banner.remove();
+    return true;
+  }
+
+  return false;
+};
+
+export const closeOrRejectPandectes = () => {
+  const banner = document.getElementById('pandectes-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectAllBtn = document.querySelector<HTMLButtonElement>('.pd-cp-ui-rejectAll');
+  if (rejectAllBtn) {
+    rejectAllBtn.click();
+    const saveBtn = document.querySelector<HTMLButtonElement>('.pd-cp-ui-save');
+    if (saveBtn) {
+      saveBtn.click();
+    }
+  }
+
+  banner.remove();
+  cleanupPandectes();
+  return true;
+};
+
+const cleanupPandectes = () => {
+  const overlay = document.getElementById('gdpr-blocking-page-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  const prefs = document.getElementById('pd-cp-preferences');
+  if (prefs) {
+    prefs.remove();
+  }
+  document.body.classList.remove('cc-scrolling-disabled');
+  document.body.style.overflow = '';
+};
+
+export const closeOrRejectR42 = () => {
+  const dialog = document.getElementById('r42CookieBar') as HTMLDialogElement | null;
+  if (!dialog) {
+    return false;
+  }
+
+  const denyBtn = dialog.querySelector<HTMLButtonElement>('.cw-deny');
+  if (denyBtn) {
+    denyBtn.click();
+    return true;
+  }
+
+  dialog.remove();
+  return true;
+};
+
+export const closeOrRejectGravito = () => {
+  const root = document.getElementById('gravitoCMPRoot');
+  if (!root) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById(
+    'gravitoTCFCMP-layer1-reject-all'
+  ) as HTMLButtonElement | null;
+  if (rejectBtn) {
+    rejectBtn.click();
+    cleanupGravito();
+    return true;
+  }
+
+  root.remove();
+  cleanupGravito();
+  return true;
+};
+
+const cleanupGravito = () => {
+  const overlay = document.querySelector<HTMLDivElement>('.gravitoCMP-opaque-container');
+  if (overlay) {
+    overlay.remove();
+  }
+  document.body.classList.remove('gravitoCMP-isOpen');
+  document.body.style.overflow = '';
+};
