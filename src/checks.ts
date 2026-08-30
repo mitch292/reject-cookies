@@ -128,3 +128,5 @@ export const checkForSuccessFactors = (): boolean =>
 export const checkForPandectes = (): boolean => !!document.getElementById('pandectes-banner');
 export const checkForR42 = (): boolean => !!document.getElementById('r42CookieBar');
 export const checkForGravito = (): boolean => !!document.getElementById('gravitoCMPRoot');
+export const checkForYleConsent = (): boolean =>
+  !!document.getElementById('yle-consent-sdk-container');

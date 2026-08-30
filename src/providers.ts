@@ -75,6 +75,7 @@ import {
   checkForMediaFireCookie,
   checkForAmazonCookie,
   checkForMudBlazorCC,
+  checkForYleConsent,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -153,6 +154,7 @@ import {
   rejectUserCentrics,
   closeOrRejectMicrosoftWCP,
   closeOrRejectMediaFireCookie,
+  closeOrRejectYleConsent,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -611,6 +613,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'gravito',
     check: checkForGravito,
     rejectOrClose: closeOrRejectGravito,
+    successful: false,
+  },
+  {
+    name: 'yle-consent',
+    check: checkForYleConsent,
+    rejectOrClose: closeOrRejectYleConsent,
     successful: false,
   },
 ];
