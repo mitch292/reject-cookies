@@ -69,6 +69,14 @@ export const rejectCookieBot = () => {
   const rejectButton = document.getElementById('CybotCookiebotDialogBodyButtonDecline');
   if (rejectButton) {
     if (rejectButton.classList.contains('CybotCookiebotDialogHide')) {
+      const allowSelectionBtn = document.getElementById(
+        'CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection'
+      ) as HTMLButtonElement | null;
+      if (allowSelectionBtn && !allowSelectionBtn.classList.contains('CybotCookiebotDialogHide')) {
+        allowSelectionBtn.click();
+        return true;
+      }
+
       const customizeBtn = document.getElementById('CybotCookiebotDialogBodyLevelButtonCustomize');
       if (customizeBtn) {
         customizeBtn.click();
@@ -479,13 +487,37 @@ export const closeOrRejectFreeChoice = () => {
     return false;
   }
 
+  const doNotConsentBtn = root.querySelector<HTMLButtonElement>('.fc-cta-do-not-consent');
+  if (doNotConsentBtn) {
+    doNotConsentBtn.click();
+    cleanupFreeChoice();
+    return true;
+  }
+
+  const confirmBtn = root.querySelector<HTMLButtonElement>('.fc-confirm-choices');
+  if (confirmBtn) {
+    confirmBtn.click();
+    cleanupFreeChoice();
+    return true;
+  }
+
+  const manageBtn = root.querySelector<HTMLButtonElement>('.fc-cta-manage-options');
+  if (manageBtn) {
+    manageBtn.click();
+    return false;
+  }
+
   root.remove();
+  cleanupFreeChoice();
+  return true;
+};
+
+const cleanupFreeChoice = () => {
   const overlay = document.querySelector<HTMLDivElement>('.fc-dialog-overlay');
   if (overlay) {
     overlay.remove();
   }
   document.body.style.overflow = '';
-  return true;
 };
 
 export const closeOrRejectWixCookieBanner = () => {
@@ -1556,6 +1588,24 @@ export const closeOrRejectWPPrivacy = () => {
 
   dialog.remove();
   document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectYleConsent = () => {
+  const container = document.getElementById('yle-consent-sdk-container');
+  if (!container) {
+    return false;
+  }
+
+  const necessaryBtn = container.querySelector<HTMLButtonElement>(
+    'button[name="accept-necessary-consents"]'
+  );
+  if (necessaryBtn) {
+    necessaryBtn.click();
+    return true;
+  }
+
+  container.remove();
   return true;
 };
 

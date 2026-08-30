@@ -122,3 +122,5 @@ export const checkForBoschConsent = (): boolean =>
 export const checkForWPPrivacy = (): boolean =>
   !!document.body?.hasAttribute('data-bd-content') &&
   !!document.querySelector<HTMLDivElement>('[role="dialog"][aria-modal="true"]');
+export const checkForYleConsent = (): boolean =>
+  !!document.getElementById('yle-consent-sdk-container');
