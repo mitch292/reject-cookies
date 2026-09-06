@@ -130,3 +130,5 @@ export const checkForR42 = (): boolean => !!document.getElementById('r42CookieBa
 export const checkForGravito = (): boolean => !!document.getElementById('gravitoCMPRoot');
 export const checkForYleConsent = (): boolean =>
   !!document.getElementById('yle-consent-sdk-container');
+export const checkForSuptGdpr = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('.supt-gdpr-banner');

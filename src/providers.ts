@@ -51,6 +51,7 @@ import {
   checkForSquarespaceCookie,
   checkForSubstackCookie,
   checkForSuccessFactors,
+  checkForSuptGdpr,
   checkForTermly,
   checkForTranscend,
   checkForTrustArc,
@@ -155,6 +156,7 @@ import {
   closeOrRejectMicrosoftWCP,
   closeOrRejectMediaFireCookie,
   closeOrRejectYleConsent,
+  closeOrRejectSuptGdpr,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -619,6 +621,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'yle-consent',
     check: checkForYleConsent,
     rejectOrClose: closeOrRejectYleConsent,
+    successful: false,
+  },
+  {
+    name: 'supt-gdpr',
+    check: checkForSuptGdpr,
+    rejectOrClose: closeOrRejectSuptGdpr,
     successful: false,
   },
 ];
