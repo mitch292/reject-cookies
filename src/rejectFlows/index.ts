@@ -32,6 +32,15 @@ export const closeOrRejectOneTrust = () => {
 
   const pcBtn = document.getElementById('onetrust-pc-btn-handler');
   if (pcBtn) {
+    if (pcBtn.dataset.rcClicked) {
+      const consentSDK = document.getElementById('onetrust-consent-sdk');
+      if (consentSDK) {
+        consentSDK.remove();
+        cleanupOneTrustOverlay();
+        return true;
+      }
+    }
+    pcBtn.dataset.rcClicked = 'true';
     pcBtn.click();
     return false;
   }
@@ -73,6 +82,7 @@ export const rejectCookieBot = () => {
         'CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection'
       ) as HTMLButtonElement | null;
       if (allowSelectionBtn && !allowSelectionBtn.classList.contains('CybotCookiebotDialogHide')) {
+        uncheckCookiebotNonNecessary();
         allowSelectionBtn.click();
         return true;
       }
@@ -106,6 +116,20 @@ export const rejectCookieBot = () => {
     return false;
   }
   return false;
+};
+
+const uncheckCookiebotNonNecessary = () => {
+  const ids = [
+    'CybotCookiebotDialogBodyLevelButtonPreferences',
+    'CybotCookiebotDialogBodyLevelButtonStatistics',
+    'CybotCookiebotDialogBodyLevelButtonMarketing',
+  ];
+  ids.forEach(id => {
+    const checkbox = document.getElementById(id) as HTMLInputElement | null;
+    if (checkbox && checkbox.checked) {
+      checkbox.click();
+    }
+  });
 };
 
 // UserCentrics is running their popup in a shadow DOM, that is open
@@ -777,8 +801,15 @@ export const closeOrRejectWebToffee = () => {
   } else {
     banner.remove();
   }
-  document.body.style.overflow = '';
+  cleanupWebToffeeOverlay();
   return true;
+};
+
+const cleanupWebToffeeOverlay = () => {
+  document
+    .querySelectorAll<HTMLDivElement>('.cli-popupbar-overlay, .cli-settings-overlay')
+    .forEach(el => el.remove());
+  document.body.style.overflow = '';
 };
 
 export const closeOrRejectBorgerCookie = () => {
@@ -1736,5 +1767,31 @@ const cleanupGravito = () => {
     overlay.remove();
   }
   document.body.classList.remove('gravitoCMP-isOpen');
+  document.body.style.overflow = '';
+};
+
+export const closeOrRejectSuptGdpr = () => {
+  const banner = document.querySelector<HTMLDivElement>('.supt-gdpr-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('.supt-gdpr-banner__reject-button');
+  if (rejectBtn) {
+    rejectBtn.click();
+    cleanupSuptGdpr();
+    return true;
+  }
+
+  banner.remove();
+  cleanupSuptGdpr();
+  return true;
+};
+
+const cleanupSuptGdpr = () => {
+  const root = document.querySelector<HTMLDivElement>('.supt-gdpr');
+  if (root) {
+    root.remove();
+  }
   document.body.style.overflow = '';
 };
