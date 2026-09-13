@@ -1,4 +1,5 @@
 import {
+  checkForAudacityConsent,
   checkForABConsent,
   checkForACookie,
   checkForAliExpressGDPR,
@@ -29,6 +30,7 @@ import {
   checkForGeneric,
   checkForGetAdBlockCookie,
   checkForGitBookCookies,
+  checkForGovUkCookie,
   checkForGravito,
   checkForHubSpotCookie,
   checkForHubspotCookie,
@@ -157,6 +159,8 @@ import {
   closeOrRejectMediaFireCookie,
   closeOrRejectYleConsent,
   closeOrRejectSuptGdpr,
+  closeOrRejectGovUkCookie,
+  closeOrRejectAudacityConsent,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -627,6 +631,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'supt-gdpr',
     check: checkForSuptGdpr,
     rejectOrClose: closeOrRejectSuptGdpr,
+    successful: false,
+  },
+  {
+    name: 'gov-uk-cookie',
+    check: checkForGovUkCookie,
+    rejectOrClose: closeOrRejectGovUkCookie,
+    successful: false,
+  },
+  {
+    name: 'audacity-consent',
+    check: checkForAudacityConsent,
+    rejectOrClose: closeOrRejectAudacityConsent,
     successful: false,
   },
 ];
