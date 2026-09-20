@@ -132,3 +132,8 @@ export const checkForYleConsent = (): boolean =>
   !!document.getElementById('yle-consent-sdk-container');
 export const checkForSuptGdpr = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.supt-gdpr-banner');
+export const checkForPdf24Consent = (): boolean =>
+  !!document.getElementById('consentManagerOverlay');
+export const checkForTealiumGDPR = (): boolean => !!document.getElementById('__tealiumGDPRecModal');
+export const checkForWestJetCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[class*="CookieAcceptanceBanner-module--banner"]');
