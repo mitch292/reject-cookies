@@ -132,3 +132,6 @@ export const checkForYleConsent = (): boolean =>
   !!document.getElementById('yle-consent-sdk-container');
 export const checkForSuptGdpr = (): boolean =>
   !!document.querySelector<HTMLDivElement>('.supt-gdpr-banner');
+export const checkForGovUkCookie = (): boolean =>
+  !!document.getElementById('global-cookie-message');
+export const checkForAudacityConsent = (): boolean => !!document.getElementById('consent-popup');
