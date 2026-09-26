@@ -1836,3 +1836,34 @@ export const closeWestJetCookie = () => {
   banner.remove();
   return true;
 };
+export const closeOrRejectGovUkCookie = () => {
+  const banner = document.getElementById('global-cookie-message');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = banner.querySelector<HTMLButtonElement>('button[data-reject-cookies="true"]');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectAudacityConsent = () => {
+  const popup = document.getElementById('consent-popup');
+  if (!popup) {
+    return false;
+  }
+
+  const rejectLink = document.getElementById('reject') as HTMLAnchorElement | null;
+  if (rejectLink) {
+    rejectLink.click();
+    return true;
+  }
+
+  popup.remove();
+  return true;
+};

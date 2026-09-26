@@ -1,4 +1,5 @@
 import {
+  checkForAudacityConsent,
   checkForABConsent,
   checkForACookie,
   checkForAliExpressGDPR,
@@ -29,6 +30,7 @@ import {
   checkForGeneric,
   checkForGetAdBlockCookie,
   checkForGitBookCookies,
+  checkForGovUkCookie,
   checkForGravito,
   checkForHubSpotCookie,
   checkForHubspotCookie,
@@ -163,6 +165,8 @@ import {
   closePdf24Consent,
   closeOrRejectTealiumGDPR,
   closeWestJetCookie,
+  closeOrRejectGovUkCookie,
+  closeOrRejectAudacityConsent,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -651,6 +655,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'westjet-cookie',
     check: checkForWestJetCookie,
     rejectOrClose: closeWestJetCookie,
+    successful: false,
+  },
+  {
+    name: 'gov-uk-cookie',
+    check: checkForGovUkCookie,
+    rejectOrClose: closeOrRejectGovUkCookie,
+    successful: false,
+  },
+  {
+    name: 'audacity-consent',
+    check: checkForAudacityConsent,
+    rejectOrClose: closeOrRejectAudacityConsent,
     successful: false,
   },
 ];

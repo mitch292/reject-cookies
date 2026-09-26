@@ -137,3 +137,6 @@ export const checkForPdf24Consent = (): boolean =>
 export const checkForTealiumGDPR = (): boolean => !!document.getElementById('__tealiumGDPRecModal');
 export const checkForWestJetCookie = (): boolean =>
   !!document.querySelector<HTMLDivElement>('[class*="CookieAcceptanceBanner-module--banner"]');
+export const checkForGovUkCookie = (): boolean =>
+  !!document.getElementById('global-cookie-message');
+export const checkForAudacityConsent = (): boolean => !!document.getElementById('consent-popup');
