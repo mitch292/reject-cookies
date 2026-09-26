@@ -1796,6 +1796,46 @@ const cleanupSuptGdpr = () => {
   document.body.style.overflow = '';
 };
 
+export const closePdf24Consent = () => {
+  const overlay = document.getElementById('consentManagerOverlay');
+  if (!overlay) {
+    return false;
+  }
+  overlay.remove();
+  document.documentElement.classList.remove('hasConsentManagerOverlay');
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectTealiumGDPR = () => {
+  const modal = document.getElementById('__tealiumGDPRecModal');
+  if (!modal) {
+    return false;
+  }
+
+  const declineBtn = document.getElementById('consent_prompt_decline') as HTMLButtonElement | null;
+  if (declineBtn) {
+    declineBtn.click();
+    document.body.classList.remove('removeScrollEffect');
+    return true;
+  }
+
+  modal.remove();
+  document.body.classList.remove('removeScrollEffect');
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeWestJetCookie = () => {
+  const banner = document.querySelector<HTMLDivElement>(
+    '[class*="CookieAcceptanceBanner-module--banner"]'
+  );
+  if (!banner) {
+    return false;
+  }
+  banner.remove();
+  return true;
+};
 export const closeOrRejectGovUkCookie = () => {
   const banner = document.getElementById('global-cookie-message');
   if (!banner) {

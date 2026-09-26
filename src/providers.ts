@@ -79,6 +79,9 @@ import {
   checkForAmazonCookie,
   checkForMudBlazorCC,
   checkForYleConsent,
+  checkForPdf24Consent,
+  checkForTealiumGDPR,
+  checkForWestJetCookie,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -159,6 +162,9 @@ import {
   closeOrRejectMediaFireCookie,
   closeOrRejectYleConsent,
   closeOrRejectSuptGdpr,
+  closePdf24Consent,
+  closeOrRejectTealiumGDPR,
+  closeWestJetCookie,
   closeOrRejectGovUkCookie,
   closeOrRejectAudacityConsent,
 } from './rejectFlows';
@@ -631,6 +637,24 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'supt-gdpr',
     check: checkForSuptGdpr,
     rejectOrClose: closeOrRejectSuptGdpr,
+    successful: false,
+  },
+  {
+    name: 'pdf24-consent',
+    check: checkForPdf24Consent,
+    rejectOrClose: closePdf24Consent,
+    successful: false,
+  },
+  {
+    name: 'tealium-gdpr',
+    check: checkForTealiumGDPR,
+    rejectOrClose: closeOrRejectTealiumGDPR,
+    successful: false,
+  },
+  {
+    name: 'westjet-cookie',
+    check: checkForWestJetCookie,
+    rejectOrClose: closeWestJetCookie,
     successful: false,
   },
   {
