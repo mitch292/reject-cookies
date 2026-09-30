@@ -16,6 +16,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Determine next version
+        id: next-version
+        run: |
+          # Base the bump on the highest released tag, not main's manifest — earlier
+          # automated PRs may be tagged but not yet merged.
+          LATEST_TAG=$(git tag -l 'v*' --sort=-v:refname | head -1)
+          IFS=. read -r MAJOR MINOR PATCH <<< "${LATEST_TAG#v}"
+          NEXT_VERSION="${MAJOR}.${MINOR}.$((PATCH + 1))"
+          echo "Latest tag: $LATEST_TAG, next version: $NEXT_VERSION"
+          echo "version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -36,6 +50,7 @@ jobs:
           COOKIE_API_BASE: ${{ vars.COOKIE_API_BASE }}
           RUN_DATE: ${{ github.event.client_payload.run_date }}
           SNAPSHOT_COUNT: ${{ github.event.client_payload.snapshot_count }}
+          NEXT_VERSION: ${{ steps.next-version.outputs.version }}
         run: |
           claude --print --dangerously-skip-permissions \
             --model claude-opus-4-6 \
@@ -54,10 +69,10 @@ jobs:
           VERSION=$(jq -r .version public/manifest.json)
           TAG="v${VERSION}"
 
-          # Skip if this tag already exists
+          # A duplicate tag means the PR can never be released — fail loudly
           if git rev-parse "$TAG" >/dev/null 2>&1; then
-            echo "Tag $TAG already exists. Skipping."
-            exit 0
+            echo "::error::Tag $TAG already exists. Bump the version on this PR to an unused version."
+            exit 1
           fi
 
           git tag "$TAG"

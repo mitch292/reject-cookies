@@ -107,7 +107,7 @@ Statuses:
 
 ## Step 6 — Version Bump
 
-If any code changes were made, increment the patch version in `public/manifest.json`. For example, `0.0.5` becomes `0.0.6`. Only bump once regardless of how many providers were fixed. Do not create a git tag — tagging is handled automatically by the workflow after this step.
+If any code changes were made, set the `version` in `public/manifest.json` to `${NEXT_VERSION}` (computed by the workflow from the latest release tag). Do not derive it from the current manifest value — `main` may lag behind unmerged release PRs. Do not create a git tag — tagging is handled automatically by the workflow after this step.
 
 ## Step 7 — Commit, Push, and Create PR
 
