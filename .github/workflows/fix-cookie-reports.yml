@@ -43,9 +43,15 @@ jobs:
       - name: Install Claude Code
         run: npm install -g @anthropic-ai/claude-code
 
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Run Claude Code to fix cookie reports
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
           COOKIE_API_TOKEN: ${{ secrets.COOKIE_API_TOKEN }}
           COOKIE_API_BASE: ${{ secrets.COOKIE_API_BASE }}
           RUN_DATE: ${{ github.event.client_payload.run_date }}
