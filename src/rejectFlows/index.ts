@@ -410,6 +410,14 @@ export const closeOrRejectIubenda = () => {
     return true;
   }
 
+  // Mediaset (RTI) wrapper has no reject button; its close button accepts only
+  // strictly necessary cookies, which is iubenda's "continue without accepting".
+  const closeBtn = banner.querySelector<HTMLButtonElement>('.iubenda-cs-close-btn');
+  if (closeBtn) {
+    closeBtn.click();
+    return true;
+  }
+
   banner.remove();
   return true;
 };
@@ -1865,5 +1873,211 @@ export const closeOrRejectAudacityConsent = () => {
   }
 
   popup.remove();
+  return true;
+};
+
+export const closeOrRejectMkDocsConsent = () => {
+  const consent = document.querySelector<HTMLDivElement>('[data-md-component="consent"]');
+  if (!consent) {
+    return false;
+  }
+
+  // The reset button unchecks every category before saving the choice
+  const rejectBtn = consent.querySelector<HTMLButtonElement>('button[type="reset"]');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  consent.remove();
+  return true;
+};
+
+export const closeOrRejectBlitzortungCookie = () => {
+  // blitzortung.org: hidden "Use necessary cookies only" button calls change(1)
+  const topDiv = document.getElementById('topdiv');
+  if (topDiv?.querySelector('.cookie_div')) {
+    const necessaryBtn = topDiv.querySelector<HTMLElement>('[onclick="change(1)"]');
+    if (necessaryBtn) {
+      necessaryBtn.click();
+      return true;
+    }
+    topDiv.remove();
+    return true;
+  }
+
+  // limaps.org: no reject button, so open the settings and accept the
+  // selection with only the (disabled, pre-checked) necessary category
+  const background = document.getElementById('cookie-background');
+  if (background?.querySelector('.cookie-div')) {
+    const extendBtn = document.getElementById('cookie-extend-button');
+    const selectBtn = document.getElementById('cookie-select-button');
+    if (selectBtn) {
+      extendBtn?.click();
+      selectBtn.click();
+      return true;
+    }
+    background.remove();
+    return true;
+  }
+
+  return false;
+};
+
+export const closeOrRejectCookieInformation = () => {
+  const overlay = document.getElementById('coiOverlay');
+  if (!overlay) {
+    return false;
+  }
+
+  const declineBtn = document.getElementById('declineButton');
+  if (declineBtn) {
+    declineBtn.click();
+    cleanupCookieInformation();
+    return true;
+  }
+
+  // Some configs hide the decline button; submitting the untouched
+  // category checkboxes (all unchecked) consents to necessary cookies only
+  const updateBtn = document.getElementById('updateButton');
+  if (updateBtn) {
+    updateBtn.click();
+    cleanupCookieInformation();
+    return true;
+  }
+
+  overlay.remove();
+  cleanupCookieInformation();
+  return true;
+};
+
+const cleanupCookieInformation = () => {
+  document.documentElement.classList.remove('noScroll');
+  document.body.style.overflow = '';
+};
+
+export const closeOrRejectKlaro = () => {
+  const notice = document.getElementById('klaro-cookie-notice');
+  if (!notice) {
+    return false;
+  }
+
+  const declineBtn = notice.querySelector<HTMLButtonElement>('.cn-decline');
+  if (declineBtn) {
+    declineBtn.click();
+    return true;
+  }
+
+  // Modal variant wraps the notice in .cookie-modal with a .cm-bg backdrop
+  const modal = notice.closest<HTMLDivElement>('.cookie-modal');
+  (modal ?? notice).remove();
+  return true;
+};
+
+export const closeOrRejectMSECookie = () => {
+  const dialog = document.querySelector<HTMLDialogElement>(
+    '[data-testid="accept-our-cookies-dialog"]'
+  );
+  if (!dialog) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('banner-reject');
+  if (rejectBtn) {
+    rejectBtn.click();
+    document.body.classList.remove('non-scrollable');
+    return true;
+  }
+
+  // Remove the wrapper so the .blackout backdrop goes too
+  const wrapper = dialog.closest<HTMLDivElement>('.cookie-consent');
+  (wrapper ?? dialog).remove();
+  document.body.classList.remove('non-scrollable');
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeBoltCookies = () => {
+  // Bolt (Trafalgar Releasing) sites: no reject button and every preference
+  // toggle defaults to on, so removal is the only option
+  const banner = document.querySelector<HTMLDivElement>(
+    '[data-section="cookies"][class*="cookies__container__"]'
+  );
+  if (!banner) {
+    return false;
+  }
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectWMRCookie = () => {
+  const banner = document.getElementById('wmr-banner');
+  if (!banner) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('wmr-btn-reject');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectCivicCookieControl = () => {
+  const notify = document.getElementById('ccc-notify');
+  if (!notify) {
+    return false;
+  }
+
+  const rejectBtn = document.getElementById('ccc-notify-reject');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  const root = document.getElementById('ccc');
+  (root ?? notify).remove();
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectGGCookieConsent = () => {
+  const host = document.querySelector<HTMLElement>('app-gg-cookie-consent-management-banner');
+  if (!host) {
+    return false;
+  }
+
+  const rejectBtn = host.querySelector<HTMLButtonElement>('.btn-essential');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  host.remove();
+  return true;
+};
+
+export const closeOrRejectShopwareCookie = () => {
+  const banner = document.querySelector<HTMLDivElement>(
+    '.cookie-permission-container[data-cookie-permission]'
+  );
+  if (!banner) {
+    return false;
+  }
+
+  // Stock Shopware's .js-cookie-permission-button only allows technically
+  // required cookies. Plugins that attach data-default-groups turn it into an
+  // accept for those groups, so only click it when that attribute is absent.
+  const denyWrapper = banner.querySelector<HTMLElement>('.js-cookie-permission-button');
+  const denyBtn = denyWrapper?.querySelector<HTMLButtonElement>('button');
+  if (denyWrapper && denyBtn && !denyWrapper.hasAttribute('data-default-groups')) {
+    denyBtn.click();
+    return true;
+  }
+
+  banner.remove();
   return true;
 };
