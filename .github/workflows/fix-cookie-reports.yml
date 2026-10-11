@@ -47,7 +47,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           COOKIE_API_TOKEN: ${{ secrets.COOKIE_API_TOKEN }}
-          COOKIE_API_BASE: ${{ vars.COOKIE_API_BASE }}
+          COOKIE_API_BASE: ${{ secrets.COOKIE_API_BASE }}
           RUN_DATE: ${{ github.event.client_payload.run_date }}
           SNAPSHOT_COUNT: ${{ github.event.client_payload.snapshot_count }}
           NEXT_VERSION: ${{ steps.next-version.outputs.version }}
