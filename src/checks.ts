@@ -140,3 +140,34 @@ export const checkForWestJetCookie = (): boolean =>
 export const checkForGovUkCookie = (): boolean =>
   !!document.getElementById('global-cookie-message');
 export const checkForAudacityConsent = (): boolean => !!document.getElementById('consent-popup');
+const isDisplayed = (el: HTMLElement | null): boolean =>
+  !!el && window.getComputedStyle(el).display !== 'none';
+export const checkForMkDocsConsent = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-md-component="consent"]:not([hidden])');
+export const checkForBlitzortungCookie = (): boolean =>
+  (!!document.querySelector<HTMLDivElement>('#topdiv > .cookie_div') &&
+    isDisplayed(document.getElementById('topdiv'))) ||
+  (!!document.querySelector<HTMLDivElement>('#cookie-background > .cookie-div') &&
+    isDisplayed(document.getElementById('cookie-background')));
+export const checkForCookieInformation = (): boolean =>
+  !!document.getElementById('coi-banner-wrapper') &&
+  isDisplayed(document.getElementById('coiOverlay'));
+export const checkForKlaro = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('#klaro-cookie-notice:not(.cookie-notice-hidden)');
+export const checkForMSECookie = (): boolean =>
+  !!document.querySelector<HTMLDialogElement>('[data-testid="accept-our-cookies-dialog"]');
+export const checkForBoltCookies = (): boolean =>
+  !!document.querySelector<HTMLDivElement>(
+    '[data-section="cookies"][class*="cookies__container__"]'
+  );
+export const checkForWMRCookie = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('#wmr-banner:not(.wmr-hidden)');
+export const checkForCivicCookieControl = (): boolean => !!document.getElementById('ccc-notify');
+export const checkForGGCookieConsent = (): boolean =>
+  !!document.querySelector<HTMLDivElement>(
+    'app-gg-cookie-consent-management-banner .consent-banner-container'
+  );
+export const checkForShopwareCookie = (): boolean =>
+  isDisplayed(
+    document.querySelector<HTMLDivElement>('.cookie-permission-container[data-cookie-permission]')
+  );
