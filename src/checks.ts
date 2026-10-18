@@ -171,3 +171,5 @@ export const checkForShopwareCookie = (): boolean =>
   isDisplayed(
     document.querySelector<HTMLDivElement>('.cookie-permission-container[data-cookie-permission]')
   );
+export const checkForGallupCookie = (): boolean =>
+  !!document.querySelector<HTMLElement>('section[title="Gallup Cookie Banner"]');

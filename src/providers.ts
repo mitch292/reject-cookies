@@ -28,6 +28,7 @@ import {
   checkForFides,
   checkForFreeChoice,
   checkForGeneric,
+  checkForGallupCookie,
   checkForGetAdBlockCookie,
   checkForGitBookCookies,
   checkForGovUkCookie,
@@ -187,6 +188,7 @@ import {
   closeOrRejectCivicCookieControl,
   closeOrRejectGGCookieConsent,
   closeOrRejectShopwareCookie,
+  closeOrRejectGallupCookie,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -747,6 +749,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'shopware-cookie',
     check: checkForShopwareCookie,
     rejectOrClose: closeOrRejectShopwareCookie,
+    successful: false,
+  },
+  {
+    name: 'gallup-cookie',
+    check: checkForGallupCookie,
+    rejectOrClose: closeOrRejectGallupCookie,
     successful: false,
   },
 ];
