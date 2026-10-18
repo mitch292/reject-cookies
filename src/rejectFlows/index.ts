@@ -803,6 +803,15 @@ export const closeOrRejectWebToffee = () => {
     return false;
   }
 
+  const rejectBtn = banner.querySelector<HTMLElement>(
+    '#wt-cli-reject-btn, [data-cli_action="reject"]'
+  );
+  if (rejectBtn) {
+    rejectBtn.click();
+    cleanupWebToffeeOverlay();
+    return true;
+  }
+
   const container = document.querySelector<HTMLDivElement>('.wt-cli-cookie-bar-container');
   if (container) {
     container.remove();
@@ -817,6 +826,7 @@ const cleanupWebToffeeOverlay = () => {
   document
     .querySelectorAll<HTMLDivElement>('.cli-popupbar-overlay, .cli-settings-overlay')
     .forEach(el => el.remove());
+  document.body.classList.remove('cli-barmodal-open');
   document.body.style.overflow = '';
 };
 
@@ -2080,4 +2090,34 @@ export const closeOrRejectShopwareCookie = () => {
 
   banner.remove();
   return true;
+};
+
+export const closeOrRejectGallupCookie = () => {
+  const banner = document.querySelector<HTMLElement>('section[title="Gallup Cookie Banner"]');
+  if (!banner) {
+    return false;
+  }
+
+  // "Save Preferences" with only the required (disabled) category checked rejects the rest.
+  const saveBtn = banner.querySelector<HTMLButtonElement>('[data-gcbb="opt-in-selected"]');
+  if (saveBtn) {
+    banner
+      .querySelectorAll<HTMLInputElement>('input[type="checkbox"]:not([disabled])')
+      .forEach(input => {
+        input.checked = false;
+      });
+    saveBtn.click();
+    cleanupGallupCookie();
+    return true;
+  }
+
+  banner.remove();
+  document.querySelector<HTMLDivElement>('[id^="gcb-sizer"]')?.remove();
+  cleanupGallupCookie();
+  return true;
+};
+
+const cleanupGallupCookie = () => {
+  document.body.classList.remove('gcb-open');
+  document.body.style.overflow = '';
 };
