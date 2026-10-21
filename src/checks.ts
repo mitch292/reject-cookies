@@ -1,4 +1,10 @@
-export const checkForOneTrust = (): boolean => !!document.getElementById('onetrust-consent-sdk');
+// OneTrust keeps #onetrust-consent-sdk and its hidden preference center in the page after consent
+// is saved, so only report it while the banner or the preference center is actually on screen.
+const isOnScreen = (el: HTMLElement | null): boolean =>
+  !!el && el.getClientRects().length > 0 && window.getComputedStyle(el).visibility !== 'hidden';
+export const checkForOneTrust = (): boolean =>
+  isOnScreen(document.getElementById('onetrust-banner-sdk')) ||
+  isOnScreen(document.getElementById('onetrust-pc-sdk'));
 export const checkForTranscend = (): boolean =>
   !!document.getElementById('transcend-consent-manager');
 export const checkForCookieBot = (): boolean =>
