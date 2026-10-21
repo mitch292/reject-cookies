@@ -9,9 +9,10 @@ const findAndClickRejectButtons = () => {
     return;
   }
 
-  commonCookiePopupChecks.forEach(({ check, rejectOrClose, successful }) => {
-    if (check() && !successful) {
-      successful = rejectOrClose();
+  commonCookiePopupChecks.forEach(provider => {
+    if (provider.check() && !provider.successful) {
+      // Store the result on the provider itself so a successful reject is not repeated every tick
+      provider.successful = provider.rejectOrClose();
       // assume that there is only one cookie consent provider and we can exit
       return;
     }

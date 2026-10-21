@@ -41,7 +41,7 @@ These are the provider names as registered in `src/providers.ts`. Check this lis
 
 | Name | Check Selector | Notes |
 |---|---|---|
-| `onetrust` | `#onetrust-consent-sdk` | |
+| `onetrust` | `#onetrust-banner-sdk`, `#onetrust-pc-sdk` | Only while on screen: the SDK container stays in the page after consent |
 | `transcend` | `#transcend-consent-manager` | Shadow DOM — element removal only |
 | `cookieyes` | `.cky-consent-container` | |
 | `cookiebot` | `#CybotCookiebotDialog` | |
