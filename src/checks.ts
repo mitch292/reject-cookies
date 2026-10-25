@@ -179,3 +179,12 @@ export const checkForShopwareCookie = (): boolean =>
   );
 export const checkForGallupCookie = (): boolean =>
   !!document.querySelector<HTMLElement>('section[title="Gallup Cookie Banner"]');
+// WPConsent renders into an open shadow root and keeps its host after consent is saved,
+// so only report it while the banner holder carries the visible class.
+export const checkForWPConsent = (): boolean =>
+  !!document
+    .getElementById('wpconsent-container')
+    ?.shadowRoot?.querySelector('#wpconsent-banner-holder.wpconsent-banner-visible');
+export const checkForUniorGdpr = (): boolean => isDisplayed(document.getElementById('gdpr-popup'));
+export const checkForCCM19 = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('#ccm-widget.ccm-show');

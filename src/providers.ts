@@ -1,5 +1,8 @@
 import {
   checkForAudacityConsent,
+  checkForWPConsent,
+  checkForUniorGdpr,
+  checkForCCM19,
   checkForABConsent,
   checkForACookie,
   checkForAliExpressGDPR,
@@ -189,6 +192,9 @@ import {
   closeOrRejectGGCookieConsent,
   closeOrRejectShopwareCookie,
   closeOrRejectGallupCookie,
+  closeOrRejectWPConsent,
+  closeUniorGdpr,
+  closeOrRejectCCM19,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -755,6 +761,24 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'gallup-cookie',
     check: checkForGallupCookie,
     rejectOrClose: closeOrRejectGallupCookie,
+    successful: false,
+  },
+  {
+    name: 'wpconsent',
+    check: checkForWPConsent,
+    rejectOrClose: closeOrRejectWPConsent,
+    successful: false,
+  },
+  {
+    name: 'unior-gdpr',
+    check: checkForUniorGdpr,
+    rejectOrClose: closeUniorGdpr,
+    successful: false,
+  },
+  {
+    name: 'ccm19',
+    check: checkForCCM19,
+    rejectOrClose: closeOrRejectCCM19,
     successful: false,
   },
 ];

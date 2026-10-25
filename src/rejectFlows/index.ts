@@ -2121,3 +2121,64 @@ const cleanupGallupCookie = () => {
   document.body.classList.remove('gcb-open');
   document.body.style.overflow = '';
 };
+
+export const closeOrRejectWPConsent = () => {
+  const host = document.getElementById('wpconsent-container');
+  const holder = host?.shadowRoot?.querySelector<HTMLElement>('#wpconsent-banner-holder');
+  if (!host || !holder) {
+    return false;
+  }
+
+  const rejectBtn = holder.querySelector<HTMLButtonElement>('.wpconsent-cancel-cookies');
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  holder.classList.remove('wpconsent-banner-visible');
+  return true;
+};
+
+export const closeUniorGdpr = () => {
+  const banner = document.getElementById('gdpr-popup');
+  if (!banner) {
+    return false;
+  }
+
+  // Only "I agree" and an async-loaded settings window are offered, so remove the banner.
+  banner.remove();
+  return true;
+};
+
+export const closeOrRejectCCM19 = () => {
+  const root = document.querySelector<HTMLDivElement>('.ccm-root');
+  if (!root) {
+    return false;
+  }
+
+  // CCM19 ignores untrusted clicks on its save buttons, but its decline handler accepts them.
+  // The control panel ships a disabled "Withdraw consent to all" button with that handler.
+  const declineBtn =
+    root.querySelector<HTMLButtonElement>('#ccm-widget .ccm--decline-cookies') ??
+    root.querySelector<HTMLButtonElement>('.ccm--decline-cookies');
+  if (declineBtn) {
+    declineBtn.disabled = false;
+    declineBtn.click();
+    cleanupCCM19();
+    return true;
+  }
+
+  root.remove();
+  cleanupCCM19();
+  return true;
+};
+
+const cleanupCCM19 = () => {
+  document.documentElement.classList.remove('ccm-blocked');
+  document.body.classList.remove('ccm-blocked');
+  document.querySelectorAll<HTMLElement>('[data-ccm-orig-inert]').forEach(el => {
+    el.inert = el.getAttribute('data-ccm-orig-inert') === '1';
+    el.removeAttribute('data-ccm-orig-inert');
+  });
+  document.body.style.overflow = '';
+};
