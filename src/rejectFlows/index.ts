@@ -3,6 +3,7 @@ import {
   rejectUserCentricsSecondaryFlow,
   rejectUserCentricsTertiaryFlow,
 } from './userCentrics';
+import { getVisibleCookiebotCustomReject } from '../checks';
 
 export const closeOrRejectOneTrust = () => {
   const rejectButton = document.getElementById('onetrust-reject-all-handler');
@@ -94,6 +95,13 @@ export const rejectCookieBot = () => {
       }
     }
     rejectButton.click();
+    return true;
+  }
+
+  // Cookiebot custom template (e.g. victorianplumbing.co.uk)
+  const customRejectBtn = getVisibleCookiebotCustomReject();
+  if (customRejectBtn) {
+    customRejectBtn.click();
     return true;
   }
 
@@ -1557,6 +1565,14 @@ export const closeOrRejectABConsent = () => {
     return false;
   }
 
+  // Sirdata renders "Do not accept" as a span marked with a stable override attribute
+  const noConsentLink = root.querySelector<HTMLElement>('[data-sd-override="noConsentLink"]');
+  if (noConsentLink) {
+    noConsentLink.click();
+    cleanupABConsent(root);
+    return true;
+  }
+
   const buttons = root.querySelectorAll<HTMLButtonElement>('button');
   let clicked = false;
   buttons.forEach(btn => {
@@ -1575,17 +1591,20 @@ export const closeOrRejectABConsent = () => {
       }
     }
   });
-  if (clicked) {
-    root.remove();
-    document.body.classList.remove('sd-cmp-VUPE8');
-    document.body.style.overflow = '';
-    return true;
-  }
 
-  root.remove();
-  document.body.classList.remove('sd-cmp-VUPE8');
-  document.body.style.overflow = '';
+  cleanupABConsent(root);
   return true;
+};
+
+// Sirdata locks scrolling with an sd-cmp-* class that can sit on <html> as well as <body>
+const cleanupABConsent = (root: HTMLElement) => {
+  root.remove();
+  [document.documentElement, document.body].forEach(el => {
+    Array.from(el.classList)
+      .filter(cls => cls.startsWith('sd-cmp-'))
+      .forEach(cls => el.classList.remove(cls));
+    el.style.overflow = '';
+  });
 };
 
 export const closeOrRejectBoschConsent = () => {
