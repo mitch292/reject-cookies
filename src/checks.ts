@@ -7,9 +7,17 @@ export const checkForOneTrust = (): boolean =>
   isOnScreen(document.getElementById('onetrust-pc-sdk'));
 export const checkForTranscend = (): boolean =>
   !!document.getElementById('transcend-consent-manager');
+// Cookiebot custom templates replace the stock dialog with site-defined markup,
+// e.g. #cookiebanner with a #rejectallbutton, and hide it with display: none after consent.
+export const getVisibleCookiebotCustomReject = (): HTMLButtonElement | null => {
+  const banner = document.getElementById('cookiebanner');
+  if (!banner || window.getComputedStyle(banner).display === 'none') return null;
+  return banner.querySelector<HTMLButtonElement>('#rejectallbutton');
+};
 export const checkForCookieBot = (): boolean =>
   !!document.getElementById('CybotCookiebotDialog') ||
-  !!document.getElementById('CybotCookiebotDialogBodyButtonDecline');
+  !!document.getElementById('CybotCookiebotDialogBodyButtonDecline') ||
+  !!getVisibleCookiebotCustomReject();
 export const checkForUserCentrics = (): boolean =>
   !!document.getElementById('usercentrics-root') ||
   !!document.getElementById('usercentrics-cmp-ui');
