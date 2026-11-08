@@ -196,3 +196,20 @@ export const checkForWPConsent = (): boolean =>
 export const checkForUniorGdpr = (): boolean => isDisplayed(document.getElementById('gdpr-popup'));
 export const checkForCCM19 = (): boolean =>
   !!document.querySelector<HTMLDivElement>('#ccm-widget.ccm-show');
+// Samsung Semiconductor's EMEA banner stays in the DOM and flips aria-hidden once dismissed.
+export const checkForSamsungSemiCookie = (): boolean =>
+  isDisplayed(
+    document.querySelector<HTMLDivElement>('#cookie_component_emea[aria-hidden="false"]')
+  );
+export const checkForBBConsent = (): boolean =>
+  isDisplayed(document.querySelector<HTMLDivElement>('#bbconsent .cookie-notice'));
+export const checkForAnalyticsConsent = (): boolean =>
+  !!document.querySelector<HTMLElement>('section.analytics-consent .analytics-consent__actions');
+// Wirtualna Polska's consent board uses hashed class names; its aria-label is the stable hook.
+export const checkForWPPlansza = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[role="dialog"][aria-label="Plansza informacyjna WP"]');
+export const checkForAcrisCookieConsent = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('[data-acris-cookie-consent] #ccAcivateModal.show');
+// Bosch DOCK privacy settings render inside a web component that carries [visible] while open.
+export const checkForBoschDockPrivacy = (): boolean =>
+  !!document.querySelector<HTMLElement>('dock-privacy-settings[visible]');

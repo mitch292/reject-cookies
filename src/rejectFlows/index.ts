@@ -2201,3 +2201,132 @@ const cleanupCCM19 = () => {
   });
   document.body.style.overflow = '';
 };
+
+export const closeOrRejectSamsungSemiCookie = () => {
+  const banner = document.getElementById('cookie_component_emea');
+  if (!banner) {
+    return false;
+  }
+
+  // "Continue without accepting" dismisses the banner with only essential cookies.
+  const continueBtn = banner.querySelector<HTMLButtonElement>('.btnCookiePopupClose');
+  if (continueBtn) {
+    continueBtn.click();
+    document.body.style.overflow = '';
+    return true;
+  }
+
+  banner.remove();
+  document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectBBConsent = () => {
+  const root = document.getElementById('bbconsent');
+  if (!root) {
+    return false;
+  }
+
+  // "Doar cookie-uri obligatorii" accepts only the strictly necessary cookies.
+  const necessaryBtn = root.querySelector<HTMLButtonElement>('.cm-btn-onlynecessary');
+  if (necessaryBtn) {
+    necessaryBtn.click();
+    return true;
+  }
+
+  root.remove();
+  return true;
+};
+
+export const closeOrRejectAnalyticsConsent = () => {
+  const banner = document.querySelector<HTMLElement>('section.analytics-consent');
+  if (!banner) {
+    return false;
+  }
+
+  // The buttons carry no classes, so pick the one labelled "Reject analytics".
+  const rejectBtn = Array.from(
+    banner.querySelectorAll<HTMLButtonElement>('.analytics-consent__actions button')
+  ).find(btn => btn.textContent?.trim().toLowerCase().startsWith('reject'));
+  if (rejectBtn) {
+    rejectBtn.click();
+    return true;
+  }
+
+  banner.remove();
+  return true;
+};
+
+export const closeWPPlansza = () => {
+  const dialog = document.querySelector<HTMLDivElement>(
+    '[role="dialog"][aria-label="Plansza informacyjna WP"]'
+  );
+  if (!dialog) {
+    return false;
+  }
+
+  // The first layer only offers "Akceptuję" and advanced settings, so remove the board.
+  const board =
+    dialog.parentElement?.parentElement === document.body ? dialog.parentElement : dialog;
+  board.remove();
+
+  // The board adds a hashed body class that blurs every body child and locks scrolling.
+  Array.from(document.body.children).forEach(child => {
+    if (child instanceof HTMLElement && window.getComputedStyle(child).filter.includes('blur')) {
+      child.style.setProperty('filter', 'none', 'important');
+    }
+  });
+  if (window.getComputedStyle(document.body).overflow === 'hidden') {
+    document.body.style.setProperty('overflow', 'auto', 'important');
+  }
+  return true;
+};
+
+export const closeOrRejectAcrisCookieConsent = () => {
+  const modal = document.getElementById('ccAcivateModal');
+  if (!modal) {
+    return false;
+  }
+
+  const onlyFunctionalBtn = modal.querySelector<HTMLButtonElement>('#ccAcceptOnlyFunctional');
+  if (onlyFunctionalBtn) {
+    onlyFunctionalBtn.click();
+    cleanupAcrisCookieConsent();
+    return true;
+  }
+
+  // No reject button: clear every optional group switch, then "Save settings".
+  const saveBtn = modal.querySelector<HTMLButtonElement>('#ccAcceptButton');
+  if (saveBtn) {
+    modal
+      .querySelectorAll<HTMLInputElement>('input[data-groupid]:not([disabled])')
+      .forEach(input => {
+        input.checked = false;
+      });
+    saveBtn.click();
+    cleanupAcrisCookieConsent();
+    return true;
+  }
+
+  modal.remove();
+  cleanupAcrisCookieConsent();
+  return true;
+};
+
+const cleanupAcrisCookieConsent = () => {
+  document.querySelectorAll<HTMLDivElement>('.modal-backdrop').forEach(el => el.remove());
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = '';
+};
+
+// DOCK renders its buttons inside a shadow root, so remove the host element.
+export const closeBoschDockPrivacy = () => {
+  const host = document.querySelector<HTMLElement>('dock-privacy-settings[visible]');
+  if (!host) {
+    return false;
+  }
+
+  host.remove();
+  document.body.style.overflow = '';
+  return true;
+};
