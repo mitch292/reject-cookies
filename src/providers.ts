@@ -96,6 +96,12 @@ import {
   checkForCivicCookieControl,
   checkForGGCookieConsent,
   checkForShopwareCookie,
+  checkForSamsungSemiCookie,
+  checkForBBConsent,
+  checkForAnalyticsConsent,
+  checkForWPPlansza,
+  checkForAcrisCookieConsent,
+  checkForBoschDockPrivacy,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -195,6 +201,12 @@ import {
   closeOrRejectWPConsent,
   closeUniorGdpr,
   closeOrRejectCCM19,
+  closeOrRejectSamsungSemiCookie,
+  closeOrRejectBBConsent,
+  closeOrRejectAnalyticsConsent,
+  closeWPPlansza,
+  closeOrRejectAcrisCookieConsent,
+  closeBoschDockPrivacy,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -779,6 +791,42 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'ccm19',
     check: checkForCCM19,
     rejectOrClose: closeOrRejectCCM19,
+    successful: false,
+  },
+  {
+    name: 'samsung-semi-cookie',
+    check: checkForSamsungSemiCookie,
+    rejectOrClose: closeOrRejectSamsungSemiCookie,
+    successful: false,
+  },
+  {
+    name: 'bbconsent',
+    check: checkForBBConsent,
+    rejectOrClose: closeOrRejectBBConsent,
+    successful: false,
+  },
+  {
+    name: 'analytics-consent',
+    check: checkForAnalyticsConsent,
+    rejectOrClose: closeOrRejectAnalyticsConsent,
+    successful: false,
+  },
+  {
+    name: 'wp-plansza',
+    check: checkForWPPlansza,
+    rejectOrClose: closeWPPlansza,
+    successful: false,
+  },
+  {
+    name: 'acris-cookie-consent',
+    check: checkForAcrisCookieConsent,
+    rejectOrClose: closeOrRejectAcrisCookieConsent,
+    successful: false,
+  },
+  {
+    name: 'bosch-dock-privacy',
+    check: checkForBoschDockPrivacy,
+    rejectOrClose: closeBoschDockPrivacy,
     successful: false,
   },
 ];
