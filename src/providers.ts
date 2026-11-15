@@ -102,6 +102,8 @@ import {
   checkForWPPlansza,
   checkForAcrisCookieConsent,
   checkForBoschDockPrivacy,
+  checkForClickio,
+  checkForPieCookieBanner,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -207,6 +209,8 @@ import {
   closeWPPlansza,
   closeOrRejectAcrisCookieConsent,
   closeBoschDockPrivacy,
+  closeOrRejectClickio,
+  closeOrRejectPieCookieBanner,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -827,6 +831,18 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'bosch-dock-privacy',
     check: checkForBoschDockPrivacy,
     rejectOrClose: closeBoschDockPrivacy,
+    successful: false,
+  },
+  {
+    name: 'clickio',
+    check: checkForClickio,
+    rejectOrClose: closeOrRejectClickio,
+    successful: false,
+  },
+  {
+    name: 'pie-cookie-banner',
+    check: checkForPieCookieBanner,
+    rejectOrClose: closeOrRejectPieCookieBanner,
     successful: false,
   },
 ];

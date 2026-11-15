@@ -213,3 +213,11 @@ export const checkForAcrisCookieConsent = (): boolean =>
 // Bosch DOCK privacy settings render inside a web component that carries [visible] while open.
 export const checkForBoschDockPrivacy = (): boolean =>
   !!document.querySelector<HTMLElement>('dock-privacy-settings[visible]');
+// Clickio keeps #cl-consent in the page and toggles cl-consent-visible on its layers.
+export const checkForClickio = (): boolean =>
+  !!document.querySelector<HTMLDivElement>('#cl-consent .cl-consent-popup.cl-consent-visible');
+// PIE (Just Eat) marks the banner inside its shadow root with isCookieBannerHidden once dismissed.
+export const checkForPieCookieBanner = (): boolean =>
+  !!document
+    .querySelector<HTMLElement>('pie-cookie-banner')
+    ?.shadowRoot?.querySelector('[data-test-id="pie-cookie-banner"]:not([iscookiebannerhidden])');
