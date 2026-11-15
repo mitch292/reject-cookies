@@ -1,6 +1,8 @@
 import { commonCookiePopupChecks } from './providers';
 
-const MAX_ATTEMPTS = 5;
+// Async-loaded CMPs (e.g. Cookiebot via GTM) can render several seconds after load, so keep
+// polling for ~10s instead of ~3s
+const MAX_ATTEMPTS = 20;
 let currentAttempt = 0;
 
 // Function to find and click reject buttons

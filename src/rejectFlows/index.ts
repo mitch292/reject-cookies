@@ -89,6 +89,25 @@ export const rejectCookieBot = () => {
       }
 
       const customizeBtn = document.getElementById('CybotCookiebotDialogBodyLevelButtonCustomize');
+      // Some configurations hide Deny, Allow selection and Customize, leaving only "Allow all"
+      // (e.g. firearmspolicy.org). Submit the selection with non-necessary categories unchecked;
+      // if the dialog is still there on the next tick, remove it instead.
+      if (
+        allowSelectionBtn &&
+        (!customizeBtn || customizeBtn.classList.contains('CybotCookiebotDialogHide'))
+      ) {
+        if (allowSelectionBtn.dataset.rcClicked) {
+          document.getElementById('CybotCookiebotDialog')?.remove();
+          document.getElementById('CybotCookiebotDialogBodyUnderlay')?.remove();
+          document.body.style.overflow = '';
+          return true;
+        }
+        uncheckCookiebotNonNecessary();
+        allowSelectionBtn.dataset.rcClicked = 'true';
+        allowSelectionBtn.click();
+        return false;
+      }
+
       if (customizeBtn) {
         customizeBtn.click();
         return false;
@@ -1580,6 +1599,9 @@ export const closeOrRejectABConsent = () => {
       const text = btn.textContent?.trim().toLowerCase();
       if (
         text === 'nie akceptuj' ||
+        text === 'do not accept' ||
+        text === 'ne pas accepter' ||
+        text === 'continuer sans accepter' ||
         text === 'reject all' ||
         text === 'refuse all' ||
         text === 'tout refuser' ||
@@ -2328,5 +2350,58 @@ export const closeBoschDockPrivacy = () => {
 
   host.remove();
   document.body.style.overflow = '';
+  return true;
+};
+
+export const closeOrRejectClickio = () => {
+  const root = document.getElementById('cl-consent');
+  if (!root) {
+    return false;
+  }
+
+  // The consent-or-pay variant (cl-consent-cl-pw) turns "reject" into "reject and subscribe",
+  // which leads to a paywall, so only click decline on the regular banner
+  if (!root.classList.contains('cl-consent-cl-pw')) {
+    const declineBtn = Array.from(
+      root.querySelectorAll<HTMLAnchorElement>(
+        '[data-role="b_decline"], [data-role="b_decline_resurface"]'
+      )
+    ).find(btn => !btn.classList.contains('cl-consent__hidden'));
+    if (declineBtn) {
+      declineBtn.click();
+      cleanupClickio();
+      return true;
+    }
+  }
+
+  root.remove();
+  cleanupClickio();
+  return true;
+};
+
+// Clickio locks scrolling with inline overflow: hidden !important on both <html> and <body>
+const cleanupClickio = () => {
+  document.body.classList.remove('clickio-cmp-ui-shown');
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+};
+
+// Just Eat's PIE cookie banner renders inside an open shadow root; its "Necessary only" action is a
+// pie-button host element with the click listener attached to it.
+export const closeOrRejectPieCookieBanner = () => {
+  const host = document.querySelector<HTMLElement>('pie-cookie-banner');
+  if (!host) {
+    return false;
+  }
+
+  const necessaryOnlyBtn = host.shadowRoot?.querySelector<HTMLElement>(
+    '[data-test-id="actions-necessary-only"]'
+  );
+  if (necessaryOnlyBtn) {
+    necessaryOnlyBtn.click();
+    return true;
+  }
+
+  host.remove();
   return true;
 };
