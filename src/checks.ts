@@ -136,9 +136,11 @@ export const checkForBoschConsent = (): boolean =>
 export const checkForWPPrivacy = (): boolean =>
   !!document.body?.hasAttribute('data-bd-content') &&
   !!document.querySelector<HTMLDivElement>('[role="dialog"][aria-modal="true"]');
+// SuccessFactors ships the banner and its modal hidden in the markup and only shows them (with
+// style="display: block") once its click handlers are bound, so clicking earlier does nothing.
 export const checkForSuccessFactors = (): boolean =>
-  !!document.querySelector<HTMLDivElement>('.cookiePolicy.cookiemanager') ||
-  !!document.getElementById('cookieManagerModal');
+  isOnScreen(document.querySelector<HTMLDivElement>('.cookiePolicy.cookiemanager')) ||
+  isOnScreen(document.getElementById('cookieManagerModal'));
 export const checkForPandectes = (): boolean => !!document.getElementById('pandectes-banner');
 export const checkForR42 = (): boolean => !!document.getElementById('r42CookieBar');
 export const checkForGravito = (): boolean => !!document.getElementById('gravitoCMPRoot');
@@ -221,3 +223,7 @@ export const checkForPieCookieBanner = (): boolean =>
   !!document
     .querySelector<HTMLElement>('pie-cookie-banner')
     ?.shadowRoot?.querySelector('[data-test-id="pie-cookie-banner"]:not([iscookiebannerhidden])');
+// TLC Direct's custom consent dialog has no reject button; "Customise" exposes per-category
+// checkboxes and an "Accept Selection" button.
+export const checkForTlcCookieConsent = (): boolean =>
+  !!document.querySelector<HTMLButtonElement>('#cookie-consent #cookie-consent-btn-accept-some');
