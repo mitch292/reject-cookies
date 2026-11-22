@@ -104,6 +104,7 @@ import {
   checkForBoschDockPrivacy,
   checkForClickio,
   checkForPieCookieBanner,
+  checkForTlcCookieConsent,
 } from './checks';
 import {
   closeOrRejectACookie,
@@ -211,6 +212,7 @@ import {
   closeBoschDockPrivacy,
   closeOrRejectClickio,
   closeOrRejectPieCookieBanner,
+  closeOrRejectTlcCookieConsent,
 } from './rejectFlows';
 import { CookiePopupCheck } from './types';
 
@@ -843,6 +845,12 @@ export const commonCookiePopupChecks: CookiePopupCheck[] = [
     name: 'pie-cookie-banner',
     check: checkForPieCookieBanner,
     rejectOrClose: closeOrRejectPieCookieBanner,
+    successful: false,
+  },
+  {
+    name: 'tlc-cookie-consent',
+    check: checkForTlcCookieConsent,
+    rejectOrClose: closeOrRejectTlcCookieConsent,
     successful: false,
   },
 ];

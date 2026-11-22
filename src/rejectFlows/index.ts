@@ -1745,6 +1745,10 @@ export const closeOrRejectSuccessFactors = () => {
   const banner = document.querySelector<HTMLDivElement>('.cookiePolicy.cookiemanager');
   if (banner) {
     banner.remove();
+    document.getElementById('cookieManagerModal')?.remove();
+    document.querySelector('.modal-backdrop')?.remove();
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
     return true;
   }
 
@@ -2403,5 +2407,31 @@ export const closeOrRejectPieCookieBanner = () => {
   }
 
   host.remove();
+  return true;
+};
+
+// TLC Direct: no reject button, so leave the optional categories unchecked and save the selection.
+export const closeOrRejectTlcCookieConsent = () => {
+  const dialog = document.getElementById('cookie-consent');
+  if (!dialog) {
+    return false;
+  }
+
+  const acceptSelectionBtn = document.getElementById(
+    'cookie-consent-btn-accept-some'
+  ) as HTMLButtonElement | null;
+  if (acceptSelectionBtn) {
+    ['consent-marketing', 'consent-analytics'].forEach(id => {
+      const checkbox = document.getElementById(id) as HTMLInputElement | null;
+      if (checkbox) {
+        checkbox.checked = false;
+      }
+    });
+    acceptSelectionBtn.click();
+    return true;
+  }
+
+  dialog.remove();
+  document.body.style.overflow = '';
   return true;
 };
